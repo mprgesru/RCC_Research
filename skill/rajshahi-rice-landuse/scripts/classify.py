@@ -51,7 +51,7 @@ TABLE_DIR = REPO_ROOT / "tables"
 CRS = "EPSG:32645"
 PIXEL_HA = 0.09  # 30 m x 30 m
 SEASONS = ("BORO", "AUS", "AMAN")
-MODEL_VERSION = "rules-0.1.0-provisional"
+MODEL_VERSION = "rules-0.3.0-provisional"
 
 
 def utc_now() -> str:
@@ -143,15 +143,24 @@ def main() -> int:
             lswi_max = source.read(source.descriptions.index("lswi_max") + 1)
             ndvi_amplitude = source.read(source.descriptions.index("ndvi_amplitude") + 1)
             ndvi_max = source.read(source.descriptions.index("ndvi_max") + 1)
+            flood_obs = source.read(source.descriptions.index("flood_obs") + 1)
             profile = source.profile.copy()
 
         with rasterio.open(support_path) as source:
             support = source.read(1)
 
-        valid = (support > 0) & np.isfinite(lswi_max) & np.isfinite(ndvi_amplitude) & np.isfinite(ndvi_max)
+        valid = (
+            (support > 0)
+            & np.isfinite(lswi_max)
+            & np.isfinite(ndvi_amplitude)
+            & np.isfinite(ndvi_max)
+            & np.isfinite(flood_obs)
+        )
+        flood_frac = np.divide(flood_obs, np.maximum(support, 1))
 
         score = (
-            weights["lswi_max"] * scaled(lswi_max, scaling["lswi_max_floor"], scaling["lswi_max_span"])
+            weights["flood_frac"] * scaled(flood_frac, scaling["flood_frac_floor"], scaling["flood_frac_span"])
+            + weights["lswi_max"] * scaled(lswi_max, scaling["lswi_max_floor"], scaling["lswi_max_span"])
             + weights["ndvi_amplitude"] * scaled(ndvi_amplitude, scaling["ndvi_amplitude_floor"], scaling["ndvi_amplitude_span"])
             + weights["ndvi_max"] * scaled(ndvi_max, scaling["ndvi_max_floor"], scaling["ndvi_max_span"])
         )
@@ -161,6 +170,7 @@ def main() -> int:
         rule = thresholds["seasons"][season]
         rice = (
             valid
+            & (flood_frac >= rule["flood_frac_min"])
             & (lswi_max >= rule["lswi_max"])
             & (ndvi_amplitude >= rule["ndvi_amplitude"])
             & (ndvi_max >= rule["ndvi_max"])

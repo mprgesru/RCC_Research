@@ -134,10 +134,10 @@ def main() -> int:
                          sensors, valid_obs_summary, model_name, model_version, threshold,
                          code_revision, output_path, low_support)
                     VALUES (?, ?, ?, ?, ?, ?, 'landsat', NULL, 'phenology_rules',
-                            'rules-0.1.0-provisional', NULL, ?, ?, 0)
+                            'rules-0.3.0-provisional', NULL, ?, ?, 0)
                     """,
                     (
-                        f"{year}_{season}_rules-0.1.0-provisional",
+                        f"{year}_{season}_rules-0.3.0-provisional",
                         year,
                         season,
                         year,
@@ -160,10 +160,10 @@ def main() -> int:
                          sensors, valid_obs_summary, model_name, model_version, threshold,
                          code_revision, output_path, low_support)
                     VALUES (?, ?, ?, ?, ?, ?, 'landsat', NULL, 'phenology_rules',
-                            'rules-0.1.0-provisional', NULL, ?, ?, 0)
+                            'rules-0.3.0-provisional', NULL, ?, ?, 0)
                     """,
                     (
-                        f"{year}_{label}_rules-0.1.0-provisional",
+                        f"{year}_{label}_rules-0.3.0-provisional",
                         year,
                         season_code,
                         year,

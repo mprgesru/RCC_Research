@@ -21,8 +21,8 @@ role does not process data; it prevents drift.
 | Source inventory | Complete | Scene counts per year and season reported |
 | Product ingest (GCD-Rice) | Pending | Checksums and coverage confirmed |
 | Pilot years 2020 and 2025 | Complete | Accuracy and support review |
-| Full 1990–2025 run | In progress | Per-year manifests complete |
-| Transitions and tables | Pending | QA report |
+| Full 1990–2025 run | Complete (provisional) | Per-year manifests complete |
+| Transitions and tables | Blocked | Needs land cover and reference samples |
 | Release | Pending | Zenodo DOI and checksums |
 
 ## Deliverables

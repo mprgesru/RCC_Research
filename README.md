@@ -19,7 +19,9 @@ scene cache live outside Git (see [Where the data lives](#where-the-data-lives))
 | Study boundaries | ✅ Committed |
 | Database schema | ✅ Committed |
 | Source inventory (STAC, GCD-Rice) | ✅ Committed |
-| Full 1990–2025 processing run | 🚧 Provisional products generated |
+| Full 1990–2025 processing run | ✅ Provisional products generated |
+| Classification | 🚧 Rule set uncalibrated — see [provisional results](reports/PROVISIONAL_RESULTS.md) |
+| Validation and transitions | ⏳ Blocked: needs reference samples and land cover |
 
 ## Repository layout
 

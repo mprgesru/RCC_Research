@@ -63,6 +63,7 @@ REFLECTANCE_OFFSET = -0.2
 OUT_BANDS = (
     "blue", "green", "red", "nir08", "swir16", "swir22",
     "ndvi_median", "lswi_median", "ndvi_max", "ndvi_min", "ndvi_amplitude", "lswi_max",
+    "flood_obs",
 )
 
 
@@ -247,6 +248,7 @@ def main() -> int:
     ndvi_max = np.full((height, width), np.nan, dtype=np.float32)
     ndvi_min = np.full((height, width), np.nan, dtype=np.float32)
     lswi_max = np.full((height, width), np.nan, dtype=np.float32)
+    flood_obs = np.zeros((height, width), dtype=np.uint16)
     valid_obs = np.zeros((height, width), dtype=np.uint16)
     used = []
     failed = []
@@ -268,6 +270,9 @@ def main() -> int:
             ndvi_max = np.fmax(ndvi_max, ndvi)
             ndvi_min = np.fmin(ndvi_min, ndvi)
             lswi_max = np.fmax(lswi_max, lswi)
+            # Paddy flooding signal: water dominance before green-up.
+            flood = (lswi > 0.05) & (lswi >= ndvi)
+            flood_obs += flood.astype(np.uint16)
         valid_obs += np.isfinite(stack[0]).astype(np.uint16)
         used.append(scene_id)
         if (position + 1) % 5 == 0 or position == len(scene_ids) - 1:
@@ -285,7 +290,12 @@ def main() -> int:
     out = np.concatenate(
         [
             median,
-            np.stack([ndvi_median, lswi_median, ndvi_max, ndvi_min, ndvi_max - ndvi_min, lswi_max]),
+            np.stack(
+                [
+                    ndvi_median, lswi_median, ndvi_max, ndvi_min,
+                    ndvi_max - ndvi_min, lswi_max, flood_obs.astype(np.float32),
+                ]
+            ),
         ],
         axis=0,
     )

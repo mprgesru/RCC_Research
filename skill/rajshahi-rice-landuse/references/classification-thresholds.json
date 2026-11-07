@@ -1,13 +1,16 @@
 {
-  "version": "0.1.0-provisional",
+  "version": "0.3.0-provisional",
   "status": "uncalibrated",
-  "note": "Thresholds are literature-informed placeholders. They must be calibrated against independent reference samples before any result is treated as final. Each season keeps its own thresholds because the protocol forbids transferring one season's thresholds to another.",
+  "note": "Thresholds are literature-informed placeholders. They must be calibrated against independent reference samples before any result is treated as final. Each season keeps its own thresholds because the protocol forbids transferring one season's thresholds to another. flood_frac = flood_obs / valid_obs, which normalises for the number of scenes available in a year; raw flood counts bias detection upward in scene-rich years.",
   "score_weights": {
-    "lswi_max": 0.5,
-    "ndvi_amplitude": 0.3,
-    "ndvi_max": 0.2
+    "flood_frac": 0.35,
+    "lswi_max": 0.25,
+    "ndvi_amplitude": 0.25,
+    "ndvi_max": 0.15
   },
   "score_scaling": {
+    "flood_frac_floor": 0.0,
+    "flood_frac_span": 0.4,
     "lswi_max_floor": 0.0,
     "lswi_max_span": 0.4,
     "ndvi_amplitude_floor": 0.2,
@@ -17,19 +20,22 @@
   },
   "seasons": {
     "BORO": {
-      "lswi_max": 0.10,
-      "ndvi_amplitude": 0.25,
-      "ndvi_max": 0.50
+      "flood_frac_min": 0.20,
+      "lswi_max": 0.15,
+      "ndvi_amplitude": 0.30,
+      "ndvi_max": 0.55
     },
     "AUS": {
-      "lswi_max": 0.10,
-      "ndvi_amplitude": 0.25,
-      "ndvi_max": 0.50
+      "flood_frac_min": 0.20,
+      "lswi_max": 0.15,
+      "ndvi_amplitude": 0.30,
+      "ndvi_max": 0.55
     },
     "AMAN": {
-      "lswi_max": 0.10,
-      "ndvi_amplitude": 0.25,
-      "ndvi_max": 0.50
+      "flood_frac_min": 0.20,
+      "lswi_max": 0.15,
+      "ndvi_amplitude": 0.30,
+      "ndvi_max": 0.55
     }
   }
 }
