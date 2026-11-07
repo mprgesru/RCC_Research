@@ -27,7 +27,7 @@ role does not process data; it prevents drift.
 | Sentinel-1 features | Complete | Nine seasonal SAR products |
 | Random forest | Implemented | Not reportable with pseudo-labels |
 | Validation (Step 6) | Frame complete | 506-point stratified design, labels pending |
-| Benchmark (Step 6) | Zhao complete | Zhao 2026 compared; Singha pending in Codespace |
+| Benchmark (Step 6) | Complete | Zhao 2026 and APRA500 compared; Singha, GCD-Rice and BBS documented as unavailable |
 | Manuscript | Draft | Methods and deviations complete; results pending |
 | Release | Pending | Zenodo DOI and checksums |
 

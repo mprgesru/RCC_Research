@@ -38,7 +38,8 @@ role never invents citations.
 | GCD-Rice | 1990–2023 | 30 m | DOI 10.57760/sciencedb.21665 |
 | Zhao et al. | 1995–2024 | 30 m | DOI 10.5194/essd-18-5583-2026 |
 | GCD-Rice paper | 2025 | — | DOI 10.1038/s41597-025-05374-1 |
-| Singha et al. paddy maps | 2017 | 10 m | figshare DOI 10.6084/m9.figshare.7873157 |
+| Singha et al. paddy maps | 2017 | 10 m | figshare DOI 10.6084/m9.figshare.7873157 — not retrievable (WAF) |
+| APRA500 | 2000–2021 | 500 m | DOI 10.5281/zenodo.5557022 — substituted benchmark |
 | Rahman et al. reference samples | 2021–2022 | 100 m² polygons | doi 10.1371/journal.pone.0355502; GitHub HamidurRahman |
 | Olofsson et al. good practice | 2014 | — | DOI 10.1016/j.rse.2014.02.015 |
 | BBS yearbooks | Varies | District | bbs.gov.bd |

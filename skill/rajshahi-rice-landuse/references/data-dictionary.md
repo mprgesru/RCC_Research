@@ -287,3 +287,4 @@ checksum. `checksums` records SHA-256 for every committed and runtime artifact.
 | 2026-11-07 | SQLite + GeoPackage; rasters as COG outside Git | Project owner |
 | 2026-11-07 | Season windows confirmed: Boro Nov–Apr, Aus May–Aug, Aman Jun–Nov | Project owner |
 | 2026-11-07 | Final benchmark set: Zhao 2026 and Singha 2017; GCD-Rice and BBS out of scope | Project owner |
+| 2026-11-07 | Singha unavailable (figshare WAF); APRA500 substituted as second benchmark | Project owner |

@@ -54,20 +54,30 @@ AOI_BBOX = (88.4433, 24.2601, 88.7674, 24.5075)
 
 # Final benchmark set. `tokens` must all appear in the normalised file name.
 PRODUCTS = [
-    {"name": "Zhao 2026 1995", "tokens": ("paddyrice1995",), "product_year": 1995,
-     "our_years": (1995,), "season": "ALL_UNION"},
-    {"name": "Zhao 2026 2005", "tokens": ("paddyrice2005",), "product_year": 2005,
-     "our_years": (2005,), "season": "ALL_UNION"},
-    {"name": "Zhao 2026 2015", "tokens": ("paddyrice2015",), "product_year": 2015,
-     "our_years": (2015,), "season": "ALL_UNION"},
-    {"name": "Zhao 2026 2024", "tokens": ("paddyrice2024",), "product_year": 2024,
-     "our_years": (2025,), "season": "ALL_UNION"},
-    {"name": "Singha 2017 Boro", "tokens": ("boro", "bgd", "2017"), "product_year": 2017,
-     "our_years": (2015, 2020), "season": "BORO"},
-    {"name": "Singha 2017 Aus", "tokens": ("aus", "bgd", "2017"), "product_year": 2017,
-     "our_years": (2015, 2020), "season": "AUS"},
-    {"name": "Singha 2017 Aman", "tokens": ("aman", "bgd", "2017"), "product_year": 2017,
-     "our_years": (2015, 2020), "season": "AMAN"},
+    {"name": "Zhao 2026 1995", "tokens": ("southandsoutheastasiapaddyrice", "1995"), "exclude": (),
+     "product_year": 1995, "our_years": (1995,), "season": "ALL_UNION"},
+    {"name": "Zhao 2026 2005", "tokens": ("southandsoutheastasiapaddyrice", "2005"), "exclude": (),
+     "product_year": 2005, "our_years": (2005,), "season": "ALL_UNION"},
+    {"name": "Zhao 2026 2015", "tokens": ("southandsoutheastasiapaddyrice", "2015"), "exclude": (),
+     "product_year": 2015, "our_years": (2015,), "season": "ALL_UNION"},
+    {"name": "Zhao 2026 2024", "tokens": ("southandsoutheastasiapaddyrice", "2024"), "exclude": (),
+     "product_year": 2024, "our_years": (2025,), "season": "ALL_UNION"},
+    {"name": "APRA500 2000", "tokens": ("paddyrice", "2000"), "exclude": ("southandsoutheastasia",),
+     "product_year": 2000, "our_years": (2000,), "season": "ALL_UNION"},
+    {"name": "APRA500 2005", "tokens": ("paddyrice", "2005"), "exclude": ("southandsoutheastasia",),
+     "product_year": 2005, "our_years": (2005,), "season": "ALL_UNION"},
+    {"name": "APRA500 2010", "tokens": ("paddyrice", "2010"), "exclude": ("southandsoutheastasia",),
+     "product_year": 2010, "our_years": (2010,), "season": "ALL_UNION"},
+    {"name": "APRA500 2015", "tokens": ("paddyrice", "2015"), "exclude": ("southandsoutheastasia",),
+     "product_year": 2015, "our_years": (2015,), "season": "ALL_UNION"},
+    {"name": "APRA500 2020", "tokens": ("paddyrice", "2020"), "exclude": ("southandsoutheastasia",),
+     "product_year": 2020, "our_years": (2020,), "season": "ALL_UNION"},
+    {"name": "Singha 2017 Boro", "tokens": ("boro", "bgd", "2017"), "exclude": (),
+     "product_year": 2017, "our_years": (2015, 2020), "season": "BORO"},
+    {"name": "Singha 2017 Aus", "tokens": ("aus", "bgd", "2017"), "exclude": (),
+     "product_year": 2017, "our_years": (2015, 2020), "season": "AUS"},
+    {"name": "Singha 2017 Aman", "tokens": ("aman", "bgd", "2017"), "exclude": (),
+     "product_year": 2017, "our_years": (2015, 2020), "season": "AMAN"},
 ]
 
 SKIP_DIRS = {".git", "node_modules", ".venv", "venv", "__pycache__", ".cache", "chips"}
@@ -110,6 +120,7 @@ def discover(roots: list[Path]) -> dict[str, Path]:
             (key, path)
             for key, path in candidates.items()
             if all(token in key for token in spec["tokens"])
+            and not any(token in key for token in spec.get("exclude", ()))
         ]
         if matches:
             matches.sort(key=lambda item: len(item[0]))

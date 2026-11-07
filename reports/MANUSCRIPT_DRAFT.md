@@ -118,13 +118,15 @@ November–April labelled by harvest year, Aus May–August, Aman June–Novembe
 | Product | Period | Resolution | Role |
 | --- | --- | --- | --- |
 | Zhao et al. (2026) | 1995–2024 | 30 m | Benchmark |
-| Singha et al. (2019) | 2017 | Sentinel-1 maps | Benchmark |
+| APRA500 | 2000–2021 | 500 m | Benchmark |
+| Singha et al. (2019) | 2017 | Sentinel-1 maps | Not used: host blocked |
 | GCD-Rice (Li et al., 2025) | 1990–2023 | 30 m, three seasons | Not used: files not retrievable |
 | BBS agricultural yearbooks | annual | district | Not used: site unreachable |
 
-Benchmarks are comparisons, not truth. The two retrievable products form the
-final comparison set; GCD-Rice and BBS are documented as limitations and do not
-enter the analysis.
+Benchmarks are comparisons, not truth. Zhao et al. (2026) and APRA500 form the
+final comparison set. APRA500 is coarse (500 m), so its comparison is interpreted
+at area and zonal level rather than at pixel boundaries. The three unavailable
+products are documented as limitations.
 
 ---
 
@@ -243,14 +245,14 @@ require validated labels. Cumulative zones are never summed with their component
 
 ### 3.8 Product benchmarking
 
-The final benchmark set is Zhao et al. (2026) for 1995, 2005, 2015 and 2024 and
-Singha et al. (2019) for Boro, Aus and Aman in 2017. Singha 2017 is compared with
-both 2015 and 2020 because it lies between them. Benchmarks are reprojected to the
-study grid and compared by zone using agreement and intersection-over-union.
-Because product class codes differ, rice values are declared explicitly per
-product. Agreement is not accuracy and is not reported as such. GCD-Rice and BBS
-are excluded because their files were not retrievable; both remain cited as
-limitations.
+The final benchmark set is Zhao et al. (2026) at 30 m for 1995, 2005, 2015 and
+2024, and APRA500 at 500 m for 2000, 2005, 2010, 2015 and 2020. Benchmarks are
+reprojected to the study grid and compared by zone using agreement and
+intersection-over-union. Because product class codes differ, rice values are
+declared explicitly per product. APRA500 is interpreted at area and zonal level
+because its 500 m cells cannot resolve field boundaries. Agreement is not accuracy
+and is not reported as such. Singha et al. (2019), GCD-Rice and BBS are excluded
+because their files were not retrievable; all remain cited as limitations.
 
 ### 3.9 Reproducibility
 
@@ -295,11 +297,13 @@ Documented deviations and their justification:
 4. **Random forest uses pseudo-labels.** It is excluded from results; the
    manuscript reports this as a design constraint rather than presenting inflated
    areas.
-5. **Benchmark scope limited to two products.** GCD-Rice and the BBS yearbooks
-   could not be retrieved from the working environment. We therefore benchmark
-   against Zhao et al. (2026) and Singha et al. (2019) only, and report the
-   omission rather than substituting another product. The estimator and the
-   comparison script accept additional products without modification.
+5. **Benchmark scope limited to two products.** Singha et al. (2019) could not be
+   retrieved because its only host (figshare) returns an AWS WAF challenge, and no
+   mirror exists. GCD-Rice and the BBS yearbooks were likewise not retrievable. We
+   substitute APRA500, a published multi-year monsoon-Asia product, as the second
+   benchmark and report the substitution. Its 500 m resolution limits comparison
+   to area and zonal patterns, not pixel boundaries. The estimator and comparison
+   script accept the missing products without modification.
 6. **Boundary status.** The RCC layer is operational, not cadastral, and its
    licence is unstated. Historical boundary sensitivity is not attempted.
 
@@ -337,23 +341,25 @@ sensitivity across flood-fraction cuts is tabulated in
 
 ### 4.3 Product comparison
 
-Zhao et al. (2026) was compared at 1995, 2005, 2015 and 2024 (against our 2025 map):
+| Product | Year | Our rice | Product rice | Agreement | IoU |
+| --- | --- | --- | --- | --- | --- |
+| Zhao 2026 | 1995 | 4.8% | 19.6% | 0.796 | 0.077 |
+| Zhao 2026 | 2005 | 11.8% | 12.3% | 0.794 | 0.077 |
+| Zhao 2026 | 2015 | 17.0% | 12.7% | 0.791 | 0.151 |
+| Zhao 2026 | 2024 → 2025 | 7.1% | 10.6% | 0.844 | 0.053 |
+| APRA500 | 2000 | 12.0% | 10.8% | 0.842 | 0.134 |
+| APRA500 | 2005 | 11.8% | 11.0% | 0.841 | 0.148 |
+| APRA500 | 2010 | 5.2% | 13.4% | 0.862 | 0.124 |
+| APRA500 | 2015 | 17.0% | 23.2% | 0.756 | 0.209 |
+| APRA500 | 2020 | 7.1% | 16.6% | 0.827 | 0.123 |
 
-| Zhao year | Our rice share | Zhao rice share | Agreement | IoU |
-| --- | --- | --- | --- | --- |
-| 1995 | 4.8% | 19.6% | 0.796 | 0.077 |
-| 2005 | 11.8% | 12.3% | 0.794 | 0.077 |
-| 2015 | 17.0% | 12.7% | 0.791 | 0.151 |
-| 2024 → 2025 | 7.1% | 10.6% | 0.844 | 0.053 |
-
-IoU is lowest inside RCC (0.02–0.07) and highest in the outer ring (0.08–0.21),
-consistent with greater divergence in mixed urban–agricultural pixels. Agreement
-is inflated by matching non-rice area and should not be read as accuracy.
-
-`[PENDING SINGHA]` The Singha et al. (2019) comparison (Boro, Aus, Aman 2017
-against 2015 and 2020) is not yet included because the figshare host blocks
-automated download. The script adds it automatically when the three files are
-present.
+IoU is lowest inside RCC (0.02–0.07 for both products) and highest in the outer
+ring (APRA500 0.20–0.34), consistent with greater divergence in mixed
+urban–agricultural pixels. Agreement is inflated by matching non-rice area and
+should not be read as accuracy. APRA500's 500 m cells make pixel-level IoU
+structurally lower; its area shares and zonal pattern are the meaningful
+comparison. Our own under-detection in 2010 and 2020 (5–7% against 13–17%)
+contributes to the disagreement.
 
 ### 4.4 Accuracy and area
 
@@ -418,6 +424,7 @@ consent and data-minimisation practice.
 ## References
 
 - Cochran, W. G. (1977). *Sampling Techniques*, 3rd ed. Wiley.
+- Han, J., Zhang, Z., Luo, Y., Cao, J., Zhang, L., Cheng, F., Zhuang, H., & Zhang, J. (2021). APRA500: a 500 m annual paddy rice dataset for monsoon Asia using multisource remote sensing data [Data set]. Zenodo. https://doi.org/10.5281/zenodo.5557022
 - Dong, J., & Xiao, X. (2016). Evolution of regional to global paddy rice mapping methods: A review. *ISPRS J. Photogramm. Remote Sens.* https://doi.org/10.1016/j.isprsjprs.2016.05.010
 - Gumma, M. K., et al. (2014). Mapping seasonal rice cropland extent and area in the high cropping intensity environment of Bangladesh using MODIS 500 m data for the year 2010. *ISPRS J. Photogramm. Remote Sens.* https://doi.org/10.1016/j.isprsjprs.2014.02.007
 - Li, S., et al. (2025). A long-term paddy rice distribution dataset in Asia at a 30 m spatial resolution. *Scientific Data*. https://doi.org/10.1038/s41597-025-05374-1

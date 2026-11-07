@@ -1,6 +1,6 @@
 {
   "artifact": "study_manifest",
-  "generated_utc": "2026-11-07T14:53:09+00:00",
+  "generated_utc": "2026-11-07T15:00:03+00:00",
   "title": "Seasonal rice persistence and rice-to-urban conversion in Rajshahi, 1990-2025",
   "protocol": {
     "path": "Rajshahi_Rice_LandUse_Research_Protocol.md",
@@ -9,7 +9,7 @@
   "code": {
     "repository": "https://github.com/mprgesru/RCC_Research.git",
     "branch": "main",
-    "revision": "2a437d525a84388091f89e957856372ea11a2b8e",
+    "revision": "d52bea3c7120670fe1edd19cb7aa83f8e590f142",
     "dirty": false
   },
   "environment": {
@@ -89,13 +89,13 @@
     },
     {
       "path": "tables/benchmark_products.csv",
-      "bytes": 1463,
-      "sha256": "d66f8c4e45b1efd1d4655491e84c35eae395a9090d9dd0af9c8f517571f8a910"
+      "bytes": 3113,
+      "sha256": "ea23aed9881ce7743b69c3e7e08738cb99019f0985e232b9a1afdb18d73045b1"
     },
     {
       "path": "tables/benchmark_summary.csv",
-      "bytes": 185,
-      "sha256": "7eb1ac2969b3604c36ab6185b036a9d65edb859be18cffff9c595850760dfff6"
+      "bytes": 370,
+      "sha256": "156d111b0a94ea0380c47d330a9862420702710d904ae24fc4d182eb60fedbab"
     },
     {
       "path": "tables/chip_index.csv",

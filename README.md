@@ -23,7 +23,7 @@ scene cache live outside Git (see [Where the data lives](#where-the-data-lives))
 | Land cover and transitions | 🚧 Computed but not interpretable — see [provisional results](reports/PROVISIONAL_RESULTS.md) |
 | Sentinel-1 and random forest | 🚧 SAR complete; RF needs reference labels |
 | Validation | 🚧 506-point frame built — labels pending |
-| Benchmark products | ✅ Zhao 2026 compared; Singha 2017 pending (file in your Codespace) |
+| Benchmark products | ✅ Zhao 2026 + APRA500 compared |
 | Manuscript draft | ✅ [Draft with methods and deviations](reports/MANUSCRIPT_DRAFT.md) |
 | Reference chips | ✅ [How to view them](reports/HOW_TO_VIEW_CHIPS.md) — release `chips-2020-v1` |
 
