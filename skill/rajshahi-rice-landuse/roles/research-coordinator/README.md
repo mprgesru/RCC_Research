@@ -22,7 +22,9 @@ role does not process data; it prevents drift.
 | Product ingest (GCD-Rice) | Pending | Checksums and coverage confirmed |
 | Pilot years 2020 and 2025 | Complete | Accuracy and support review |
 | Full 1990–2025 run | Complete (provisional) | Per-year manifests complete |
-| Transitions and tables | Blocked | Needs land cover and reference samples |
+| Land cover (Step 5) | Complete (provisional) | Nine-class derived layer |
+| Transitions (Step 7) | Complete (mapped only) | Not interpretable until calibrated |
+| Validation (Step 6) | Blocked | Needs reference samples |
 | Release | Pending | Zenodo DOI and checksums |
 
 ## Deliverables

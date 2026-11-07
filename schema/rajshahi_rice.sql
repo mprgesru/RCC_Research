@@ -125,9 +125,9 @@ CREATE TABLE IF NOT EXISTS transition_estimates (
     zone_id           TEXT NOT NULL REFERENCES zones(zone_id),
     season_or_measure TEXT NOT NULL CHECK (season_or_measure IN ('BORO','AUS','AMAN','ALL_UNION')),
     from_class        TEXT NOT NULL CHECK (from_class IN
-                        ('BORO','AUS','AMAN','OTHER_CROPLAND','ORCHARD','OTHER_VEG','BUILT','WATER','BARE','NO_DATA')),
+                        ('BORO','AUS','AMAN','ALL_RICE','OTHER_CROPLAND','ORCHARD','OTHER_VEG','BUILT','WATER','BARE','NO_DATA')),
     to_class          TEXT NOT NULL CHECK (to_class IN
-                        ('BORO','AUS','AMAN','OTHER_CROPLAND','ORCHARD','OTHER_VEG','BUILT','WATER','BARE','NO_DATA')),
+                        ('BORO','AUS','AMAN','ALL_RICE','OTHER_CROPLAND','ORCHARD','OTHER_VEG','BUILT','WATER','BARE','NO_DATA')),
     mapped_area_ha    REAL NOT NULL CHECK (mapped_area_ha >= 0),
     adjusted_area_ha  REAL CHECK (adjusted_area_ha IS NULL OR adjusted_area_ha >= 0),
     ci95_lower_ha     REAL CHECK (ci95_lower_ha IS NULL OR ci95_lower_ha >= 0),

@@ -16,8 +16,10 @@ interpretable. It is a build record, not a results section.
 | Seasonal probability and class rasters | 48 | `rasters/products/` (runtime) |
 | All-rice union rasters | 8 | `rasters/products/` (runtime) |
 | Cropping-intensity rasters | 8 | `rasters/products/` (runtime) |
+| Land-cover rasters | 8 | `rasters/products/` (runtime) |
 | `map_runs` rows | 64 | database |
 | `area_estimates` (mapped only) rows | 320 | database and `tables/area_estimates_mapped.csv` |
+| `transition_estimates` rows | 1,129 | database and `tables/transition_estimates_mapped.csv` |
 
 The grid is 1098 × 911 pixels at 30 m. All 24 composites completed; two 2025 Boro
 scenes (`LC09_..._20241221`, `LC08_..._20241229`) were not yet ingested in the
@@ -85,6 +87,54 @@ All-rice union, unadjusted pixel counts converted to hectares.
 
 The year-to-year pattern above should not be read as land-use change. It mixes
 signal with observation opportunity.
+
+## Step 5 — general land cover
+
+Nine-class land cover derived per year from annual spectral state, with rice classes
+taken from the seasonal products. 2020 fractions over RCC + 10 km:
+
+| Class | Share |
+| --- | --- |
+| Boro | 6.3% |
+| Aus | 1.0% |
+| Aman | 3.8% |
+| Other annual crop / fallow | 11.6% |
+| Orchard / perennial | 46.8% |
+| Other vegetation | 18.9% |
+| Built-up | 3.4% |
+| Water | 4.5% |
+| Bare | 3.6% |
+
+The orchard class is **perennial vegetation with the orchard signal unconfirmed**.
+It very likely absorbs homestead trees, and mango orchard cannot be separated
+without reference evidence. Built-up is probably underestimated in village areas
+because tree cover dilutes the built-up index.
+
+## Step 7 — transitions
+
+1,129 transition rows were computed for seven five-year periods across five zones
+and stored in `transition_estimates`.
+
+The matrix works mechanically but is **not measuring land-use change**. The
+diagnostic is rice persistence:
+
+| Period | Rice at start (ha) | Still rice at end (ha) | Persistence |
+| --- | --- | --- | --- |
+| 1995→2000 | 4,443 | 1,795 | 40% |
+| 2000→2005 | 10,862 | 4,145 | 38% |
+| 2005→2010 | 9,410 | 2,399 | 25% |
+| 2010→2015 | 5,053 | 3,010 | 60% |
+| 2015→2020 | 13,855 | 3,765 | 27% |
+| 2020→2025 | 6,790 | 2,691 | 40% |
+
+Real paddy landscapes persist far more strongly between five-year reference
+years. A persistence of 25–40% means the matrix is dominated by year-to-year
+classifier disagreement, not conversion. The largest single transition,
+4,711 ha of rice to "orchard" between 2015 and 2020, is not a credible
+land-management process at that scale; it is classification noise.
+
+**Do not report any transition result.** The machinery is correct; the inputs to
+it are not yet calibrated.
 
 ## What must happen before results are reported
 

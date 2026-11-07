@@ -128,7 +128,7 @@ wards are referenced by `ward_id` plus `boundary_version`.
 - `season` restricted to the six codes in `season_legend` via foreign key.
 - `season_or_measure` restricted to seasons, `ALL_UNION` and `INTENSITY_0..3`.
 - `sensors` restricted to `landsat` or `landsat+sentinel1+sentinel2`.
-- Transition classes restricted to the nine class codes plus `NO_DATA`.
+- Transition classes restricted to the nine class codes plus `ALL_RICE` and `NO_DATA`.
 - Areas non-negative; `ua`, `pa` and `f1` in `[0, 1]`.
 - Confidence bounds ordered (`ci95_lower_ha <= ci95_upper_ha`).
 - `window_end >= window_start`; `period_end > period_start`.

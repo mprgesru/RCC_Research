@@ -228,8 +228,8 @@ in `schema/`. Field names and types below are authoritative.
 | `period_end` | INTEGER | Later reference year |
 | `zone_id` | TEXT | Foreign key to `zones` |
 | `season_or_measure` | TEXT | Season or `ALL_UNION` |
-| `from_class` | TEXT | Earlier class |
-| `to_class` | TEXT | Later class |
+| `from_class` | TEXT | Earlier class code, or `ALL_RICE` for union transitions |
+| `to_class` | TEXT | Later class code, or `ALL_RICE` for union transitions |
 | `mapped_area_ha` | REAL | Raw transition area |
 | `adjusted_area_ha` | REAL | Adjusted estimate |
 | `ci95_lower_ha` | REAL | Lower bound |

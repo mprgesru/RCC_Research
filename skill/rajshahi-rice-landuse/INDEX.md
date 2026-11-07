@@ -30,6 +30,8 @@ but must not redefine shared definitions.
 | `scripts/download_gcd_rice.py` | Data Steward | Pending |
 | `scripts/build_composites.py` | Phenology Mapper | Implemented |
 | `scripts/classify.py` | Phenology Mapper | Implemented (provisional rule set) |
+| `scripts/classify_lulc.py` | Phenology Mapper | Implemented (provisional land cover) |
+| `scripts/transitions.py` | Accuracy and Change Analyst | Implemented (mapped only) |
 | `scripts/validate.py` | Accuracy and Change Analyst | Blocked: needs reference samples |
 | `scripts/load_tables.py` | Data Steward | Implemented |
 
