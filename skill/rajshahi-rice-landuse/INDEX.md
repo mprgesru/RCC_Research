@@ -37,6 +37,10 @@ but must not redefine shared definitions.
 | `scripts/export_chips.py` | Accuracy and Change Analyst | Implemented (blinded chips) |
 | `scripts/build_sar_composites.py` | Phenology Mapper | Implemented |
 | `scripts/classify_rf.py` | Phenology Mapper | Implemented (needs reference labels) |
+| `scripts/support_summary.py` | Data Steward | Implemented |
+| `scripts/benchmark_products.py` | Accuracy and Change Analyst | Implemented (needs manual downloads) |
+| `scripts/study_manifest.py` | Data Steward | Implemented |
+| `scripts/run_all.sh` | Data Steward | Implemented |
 | `scripts/load_tables.py` | Data Steward | Implemented |
 
 ## Execution order

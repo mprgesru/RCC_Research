@@ -23,7 +23,8 @@ scene cache live outside Git (see [Where the data lives](#where-the-data-lives))
 | Land cover and transitions | 🚧 Computed but not interpretable — see [provisional results](reports/PROVISIONAL_RESULTS.md) |
 | Sentinel-1 and random forest | 🚧 SAR complete; RF needs reference labels |
 | Validation | 🚧 506-point frame built — labels pending |
-| Benchmark products | ⏳ Manual download required |
+| Benchmark products | 🚧 Script ready — manual download required |
+| Manuscript draft | ✅ [Draft with methods and deviations](reports/MANUSCRIPT_DRAFT.md) |
 
 ## Repository layout
 

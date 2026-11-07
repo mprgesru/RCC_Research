@@ -1,0 +1,171 @@
+{
+  "artifact": "study_manifest",
+  "generated_utc": "2026-11-07T09:02:17+00:00",
+  "title": "Seasonal rice persistence and rice-to-urban conversion in Rajshahi, 1990-2025",
+  "protocol": {
+    "path": "Rajshahi_Rice_LandUse_Research_Protocol.md",
+    "status": "planning draft"
+  },
+  "code": {
+    "repository": "https://github.com/mprgesru/RCC_Research.git",
+    "branch": "main",
+    "revision": "963f82f5c96e547267f4cc2243fe4b330786a8c8",
+    "dirty": false
+  },
+  "environment": {
+    "python": "3.12.16",
+    "platform": "Linux-6.8.0-147-generic-x86_64-with-glibc2.43",
+    "pip_freeze": "environment/pip-freeze.txt"
+  },
+  "runtime_root": "/home/coder/research-runtime/rajshahi-rice",
+  "committed_manifests": [
+    "boundary_manifest.json",
+    "db_manifest.json",
+    "scene_inventory.json",
+    "study_manifest.json"
+  ],
+  "runtime_manifests": [
+    "classify_1990.json",
+    "classify_1995.json",
+    "classify_2000.json",
+    "classify_2005.json",
+    "classify_2010.json",
+    "classify_2015.json",
+    "classify_2020.json",
+    "classify_2025.json",
+    "composite_1990_AMAN.json",
+    "composite_1990_AUS.json",
+    "composite_1990_BORO.json",
+    "composite_1995_AMAN.json",
+    "composite_1995_AUS.json",
+    "composite_1995_BORO.json",
+    "composite_2000_AMAN.json",
+    "composite_2000_AUS.json",
+    "composite_2000_BORO.json",
+    "composite_2005_AMAN.json",
+    "composite_2005_AUS.json",
+    "composite_2005_BORO.json",
+    "composite_2010_AMAN.json",
+    "composite_2010_AUS.json",
+    "composite_2010_BORO.json",
+    "composite_2015_AMAN.json",
+    "composite_2015_AUS.json",
+    "composite_2015_BORO.json",
+    "composite_2020_AMAN.json",
+    "composite_2020_AUS.json",
+    "composite_2020_BORO.json",
+    "composite_2025_AMAN.json",
+    "composite_2025_AUS.json",
+    "composite_2025_BORO.json",
+    "lulc_1990.json",
+    "lulc_1995.json",
+    "lulc_2000.json",
+    "lulc_2005.json",
+    "lulc_2010.json",
+    "lulc_2015.json",
+    "lulc_2020.json",
+    "lulc_2025.json",
+    "rf_2015.json",
+    "rf_2020.json",
+    "rf_2025.json",
+    "sample_design_2020.json",
+    "sar_2015_AMAN.json",
+    "sar_2015_AUS.json",
+    "sar_2015_BORO.json",
+    "sar_2020_AMAN.json",
+    "sar_2020_AUS.json",
+    "sar_2020_BORO.json",
+    "sar_2025_AMAN.json",
+    "sar_2025_AUS.json",
+    "sar_2025_BORO.json",
+    "transitions.json"
+  ],
+  "published_tables": [
+    {
+      "path": "tables/area_estimates_mapped.csv",
+      "bytes": 23250,
+      "sha256": "dc91963fbc14523a2ad0804399050cf5037d7bfdfe60b26babf248297e141a0d"
+    },
+    {
+      "path": "tables/chip_index.csv",
+      "bytes": 110157,
+      "sha256": "1a7f75f5323f927e27a4eca55bd5bda4adebe409c2e3623f416ebdc0356c89a7"
+    },
+    {
+      "path": "tables/composite_summary.csv",
+      "bytes": 3370,
+      "sha256": "c140dad6fac48e1581f1b382e38ae8b32a557bbbbf5b38551af47aa4605b5c99"
+    },
+    {
+      "path": "tables/interpretation_sheet.csv",
+      "bytes": 54927,
+      "sha256": "33be9647ba54ecbe7c0314220c84da42a997a74354ddabc2925a5fc490a67a2d"
+    },
+    {
+      "path": "tables/lulc_class_fractions.csv",
+      "bytes": 2937,
+      "sha256": "7bf9ea66d449f3ad0c8d9d8459b04bb38c3f0a0a6057805b2cbfe48f8d8df037"
+    },
+    {
+      "path": "tables/observation_support_by_zone.csv",
+      "bytes": 5404,
+      "sha256": "406589fbd40c4f8b8a93a7f588e4fe53c756d0068736ea865846b3580a16d9bc"
+    },
+    {
+      "path": "tables/reference_sample_sheet.csv",
+      "bytes": 32990,
+      "sha256": "30c38c37517fffda16ca09cef73f6d799f712b47dc5ff7962b9bbeb849fa1448"
+    },
+    {
+      "path": "tables/sample_design.csv",
+      "bytes": 2663,
+      "sha256": "d61ac379e1ec22bf9b03bd3c37df3b34e4754915ef3b7987dd7b695a264bf405"
+    },
+    {
+      "path": "tables/sar_summary.csv",
+      "bytes": 959,
+      "sha256": "d2e0aab05ba6338752824f0487d334e6dd41c194c11038ac6a95d7869619700c"
+    },
+    {
+      "path": "tables/scene_inventory.csv",
+      "bytes": 5623,
+      "sha256": "965016f9255f6736ebb9bd1c6fdab82f021bcfb0fd423886a109050ae448eed9"
+    },
+    {
+      "path": "tables/scene_inventory_scenes.csv",
+      "bytes": 120456,
+      "sha256": "5855868afc36a72312736aafc921f284fc56ca26599abf39e0992e67f7641570"
+    },
+    {
+      "path": "tables/transition_estimates_mapped.csv",
+      "bytes": 49891,
+      "sha256": "1a34317f6b65f118993738f806e7822f83f96acea7641fae2fb262e7b528fa08"
+    },
+    {
+      "path": "tables/zones.csv",
+      "bytes": 1026,
+      "sha256": "58cbfa7c67313122715dc77600e74273bffa380015392ba2356a9cd2785aa94c"
+    }
+  ],
+  "step_status": {
+    "1_boundary_and_manifest": "complete",
+    "2_observation_inventory": "complete",
+    "3_reference_data": "sample frame complete; interpretation pending",
+    "4_seasonal_rule_maps": "complete (provisional, uncalibrated)",
+    "4_sar_features": "complete for 2015, 2020, 2025",
+    "4_random_forest": "implemented; not reportable on pseudo-labels",
+    "5_land_cover": "complete (provisional, unvalidated)",
+    "6_validation": "estimator complete; blocked on labels",
+    "6_benchmark": "script ready; external downloads blocked",
+    "7_change": "computed (mapped only, not interpretable)",
+    "8_reproducible_outputs": "complete"
+  },
+  "known_deviations": [
+    "Season windows are provisional pending BRRI/DAE confirmation.",
+    "Sentinel-2 has no 2015 coverage over the AOI; the 2015 comparison uses Sentinel-1 only.",
+    "Rule thresholds are uncalibrated placeholders.",
+    "Random forest trained on pseudo-labels is circular and not reportable.",
+    "GCD-Rice, Zhao 2026 and Singha 2017 file hosts returned HTTP 403; manual download required.",
+    "The RCC boundary is an operational health-microplanning layer, not a cadastral boundary, and its licence is unstated."
+  ]
+}
