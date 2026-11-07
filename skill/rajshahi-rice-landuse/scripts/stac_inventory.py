@@ -255,7 +255,8 @@ def main() -> int:
             for r in records
         ):
             warnings.append(
-                f"{year}: Landsat 7 SLC-off scenes present; protocol excludes L7 2003-2011 from the baseline"
+                f"{year}: Landsat 7 SLC-off scenes present; decide whether to gap-mask or "
+                "exclude L7 for this year (practice used in GCD-Rice) and record the choice"
             )
 
     s2_2015 = sum(

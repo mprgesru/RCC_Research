@@ -1,6 +1,6 @@
 {
   "artifact": "scene_inventory",
-  "generated_utc": "2026-11-07T06:37:20+00:00",
+  "generated_utc": "2026-11-07T06:38:51+00:00",
   "catalog": {
     "earth-search": "https://earth-search.aws.element84.com/v1/search",
     "planetary-computer": "https://planetarycomputer.microsoft.com/api/stac/v1/search"
@@ -913,8 +913,8 @@
     }
   },
   "warnings": [
-    "2005: Landsat 7 SLC-off scenes present; protocol excludes L7 2003-2011 from the baseline",
-    "2010: Landsat 7 SLC-off scenes present; protocol excludes L7 2003-2011 from the baseline",
+    "2005: Landsat 7 SLC-off scenes present; decide whether to gap-mask or exclude L7 for this year (practice used in GCD-Rice) and record the choice",
+    "2010: Landsat 7 SLC-off scenes present; decide whether to gap-mask or exclude L7 for this year (practice used in GCD-Rice) and record the choice",
     "2015: no Sentinel-2 L2A scenes over the AOI in either catalog; the protocol's 2015 Sentinel-enhanced comparison cannot use S2. Use Sentinel-1 only for 2015, or restrict the sensor comparison to 2020 and 2025."
   ]
 }
