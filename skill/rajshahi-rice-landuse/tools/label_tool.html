@@ -1,0 +1,395 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rajshahi reference labelling</title>
+<style>
+  :root { --bg:#f6f7f4; --card:#fff; --ink:#1c2019; --muted:#5d6657; --line:#dde2d8;
+          --rice:#2e7d32; --non:#8d6e63; --na:#9e9e9e; --accent:#1565c0; }
+  * { box-sizing:border-box; }
+  body { margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+         background:var(--bg); color:var(--ink); }
+  header { position:sticky; top:0; z-index:5; background:#fff; border-bottom:1px solid var(--line);
+           padding:.6rem 1rem; display:flex; gap:1rem; align-items:center; flex-wrap:wrap; }
+  header h1 { font-size:1rem; margin:0; }
+  .bar { flex:1; height:8px; background:#e8ece4; border-radius:4px; overflow:hidden; min-width:120px; }
+  .bar > i { display:block; height:100%; width:0; background:var(--accent); }
+  input, button, select, textarea { font:inherit; }
+  input[type=text] { padding:.35rem .5rem; border:1px solid var(--line); border-radius:6px; }
+  button { padding:.4rem .7rem; border:1px solid var(--line); background:#fff; border-radius:6px; cursor:pointer; }
+  button:hover { border-color:#b9c2b2; }
+  button.primary { background:var(--accent); color:#fff; border-color:var(--accent); }
+  main { display:grid; grid-template-columns: minmax(0,1.55fr) minmax(320px,1fr); gap:1rem; padding:1rem; }
+  .images { display:grid; gap:.6rem; }
+  .season { background:var(--card); border:1px solid var(--line); border-radius:8px; padding:.4rem; }
+  .season img { width:100%; display:block; border-radius:4px; background:#eee; min-height:120px; }
+  .season .head { display:flex; justify-content:space-between; align-items:center; font-size:.85rem; color:var(--muted); }
+  .panel { background:var(--card); border:1px solid var(--line); border-radius:8px; padding:.8rem; }
+  .panel h2 { font-size:.8rem; text-transform:uppercase; letter-spacing:.05em; color:var(--muted); margin:.2rem 0 .5rem; }
+  .classes { display:grid; grid-template-columns:1fr 1fr; gap:.35rem; }
+  .classes button { text-align:left; display:flex; justify-content:space-between; }
+  .classes button.on { background:#e3f2fd; border-color:var(--accent); font-weight:600; }
+  .toggles { display:grid; gap:.45rem; margin-top:.4rem; }
+  .toggle { display:grid; grid-template-columns: 4.5rem 1fr; align-items:center; gap:.4rem; }
+  .toggle .seg { display:grid; grid-template-columns:repeat(3,1fr); gap:.25rem; }
+  .toggle .seg button.on[data-v=Y] { background:#e8f5e9; border-color:var(--rice); font-weight:700; }
+  .toggle .seg button.on[data-v=N] { background:#efebe9; border-color:var(--non); font-weight:700; }
+  .toggle .seg button.on[data-v=NA] { background:#eeeeee; border-color:var(--na); font-weight:700; }
+  .row { display:flex; gap:.5rem; align-items:center; margin-top:.6rem; flex-wrap:wrap; }
+  .hint { color:var(--muted); font-size:.8rem; line-height:1.5; }
+  .warn { background:#fff8e1; border:1px solid #ffe082; padding:.5rem; border-radius:6px; font-size:.82rem; margin-top:.6rem; }
+  .err { background:#ffebee; border:1px solid #ef9a9a; }
+  .hidden { display:none !important; }
+  kbd { background:#f1f3ee; border:1px solid var(--line); border-bottom-width:2px; border-radius:4px; padding:0 .3rem; font-size:.8rem; }
+  @media (max-width:900px) { main { grid-template-columns:1fr; } }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Rajshahi labelling</h1>
+  <span id="counter" class="hint">0 / 0</span>
+  <div class="bar"><i id="progress"></i></div>
+  <label class="hint">Interpreter <input id="interpreter" type="text" size="8" placeholder="AB"></label>
+  <label class="hint">View
+    <select id="filter">
+      <option value="unlabelled">Unlabelled</option>
+      <option value="all">All</option>
+      <option value="flagged">Low confidence / notes</option>
+    </select>
+  </label>
+  <button id="export">Export CSV</button>
+</header>
+
+<section id="setup" style="padding:1rem; max-width:760px;">
+  <div class="panel">
+    <h2>1. Load the sheet</h2>
+    <input id="csv" type="file" accept=".csv,text/csv">
+    <p class="hint">Use <code>tables/interpretation_quick.csv</code> or the full
+    <code>tables/interpretation_sheet.csv</code>. Existing labels are loaded back in.</p>
+  </div>
+  <div class="panel" style="margin-top:1rem;">
+    <h2>2. Load the chips folder</h2>
+    <input id="folder" type="file" webkitdirectory directory multiple>
+    <p class="hint">Select the <code>chips/2020</code> folder (the one containing
+    <code>BORO</code>, <code>AMAN</code> and <code>AUS</code>). If you skip this, the page
+    tries relative paths, which works when it sits inside that folder.</p>
+  </div>
+  <div class="panel" style="margin-top:1rem;">
+    <h2>Keys</h2>
+    <p class="hint">
+      <b>Class:</b> <kbd>b</kbd> Boro · <kbd>a</kbd> Aus · <kbd>m</kbd> Aman ·
+      <kbd>c</kbd> other crop · <kbd>o</kbd> orchard · <kbd>v</kbd> other vegetation ·
+      <kbd>u</kbd> built · <kbd>w</kbd> water · <kbd>r</kbd> bare<br>
+      <b>Seasons:</b> <kbd>1</kbd> Boro · <kbd>2</kbd> Aman · <kbd>3</kbd> Aus (cycles Y → N → NA)<br>
+      <b>Other:</b> <kbd>Enter</kbd> next · <kbd>&larr;</kbd> previous ·
+      <kbd>l</kbd> confidence · <kbd>n</kbd> note
+    </p>
+  </div>
+  <div class="row"><button id="start" class="primary">Start labelling</button></div>
+  <div id="setupMsg" class="hint" style="margin-top:.6rem;"></div>
+</section>
+
+<main id="app" class="hidden">
+  <div class="images">
+    <div class="season" data-season="BORO">
+      <div class="head"><b>Boro</b><span class="state"></span></div>
+      <img id="img-BORO" alt="Boro chip">
+    </div>
+    <div class="season" data-season="AMAN">
+      <div class="head"><b>Aman</b><span class="state"></span></div>
+      <img id="img-AMAN" alt="Aman chip">
+    </div>
+    <div class="season" data-season="AUS">
+      <div class="head"><b>Aus</b><span class="state"></span></div>
+      <img id="img-AUS" alt="Aus chip">
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2>Point <span id="sid"></span> · <span id="zid"></span></h2>
+
+    <h2>Land cover</h2>
+    <div class="classes" id="classes"></div>
+
+    <h2 style="margin-top:1rem;">Rice by season</h2>
+    <div class="toggles" id="toggles"></div>
+
+    <div class="row">
+      <button id="prev">&larr; Prev</button>
+      <button id="next" class="primary">Next &rarr;</button>
+      <button id="flag">Toggle low confidence</button>
+    </div>
+
+    <div class="row">
+      <input id="note" type="text" placeholder="note (optional)" style="flex:1;">
+    </div>
+
+    <div id="warn" class="warn hidden"></div>
+    <div class="hint" style="margin-top:.5rem;">
+      Blind mode: the map class is never shown. Judge only from the imagery.
+    </div>
+  </div>
+</main>
+
+<script>
+const CLASSES = [
+  ["BORO","Boro","b"], ["AUS","Aus","a"], ["AMAN","Aman","m"],
+  ["OTHER_CROPLAND","Other crop","c"], ["ORCHARD","Orchard","o"],
+  ["OTHER_VEG","Other veg","v"], ["BUILT","Built-up","u"],
+  ["WATER","Water","w"], ["BARE","Bare","r"]
+];
+const SEASONS = ["BORO","AMAN","AUS"];
+const RICE = new Set(["BORO","AUS","AMAN"]);
+const FIELDS = ["sample_id","reference_year","season_or_lulc","zone_id",
+  "chip_2020_BORO","chip_2020_AMAN","chip_2020_AUS",
+  "reference_class","reference_source","reference_date","confidence","interpreter_id",
+  "notes","boro_rice","boro_confidence","aus_rice","aus_confidence",
+  "aman_rice","aman_confidence","season_notes"];
+const LS_KEY = "rajshahi_labels_v1";
+
+let rows = [], order = [], idx = 0, images = {}, urls = [];
+let interpreter = "";
+
+const $ = (s) => document.querySelector(s);
+
+/* ---------- CSV ---------- */
+function parseCSV(text) {
+  const out = []; let row = [], field = "", quoted = false;
+  for (let i = 0; i < text.length; i++) {
+    const c = text[i];
+    if (quoted) {
+      if (c === '"' && text[i+1] === '"') { field += '"'; i++; }
+      else if (c === '"') quoted = false;
+      else field += c;
+    } else if (c === '"') quoted = true;
+    else if (c === ',') { row.push(field); field = ""; }
+    else if (c === '\n') { row.push(field); out.push(row); row = []; field = ""; }
+    else if (c !== '\r') field += c;
+  }
+  if (field.length || row.length) { row.push(field); out.push(row); }
+  const header = out.shift().map(h => h.trim());
+  return out.filter(r => r.some(v => v !== "")).map(r => {
+    const o = {};
+    header.forEach((h, i) => o[h] = (r[i] ?? "").trim());
+    return o;
+  });
+}
+function csvCell(v) { v = (v ?? "").toString(); return /[",\n]/.test(v) ? '"' + v.replace(/"/g,'""') + '"' : v; }
+function toCSV(list) {
+  const lines = [FIELDS.join(",")];
+  for (const r of list) lines.push(FIELDS.map(f => csvCell(r[f])).join(","));
+  return lines.join("\n") + "\n";
+}
+
+/* ---------- state ---------- */
+function storageKey() { return LS_KEY + ":" + (interpreter || "anon"); }
+function save() {
+  const keep = {};
+  for (const r of rows) keep[r.sample_id] = r;
+  localStorage.setItem(storageKey(), JSON.stringify({ interpreter, rows: keep }));
+}
+function restore(name) {
+  try {
+    const data = JSON.parse(localStorage.getItem(LS_KEY + ":" + name) || "null");
+    if (!data) return;
+    for (const r of rows) {
+      const saved = data.rows[r.sample_id];
+      if (saved) Object.assign(r, saved);
+    }
+  } catch (e) {}
+}
+function isLabelled(r) {
+  return r.reference_class && SEASONS.every(s => ["Y","N","NA"].includes(r[s.toLowerCase() + "_rice"]));
+}
+
+/* ---------- rendering ---------- */
+function buildControls() {
+  const classes = $("#classes");
+  classes.innerHTML = "";
+  for (const [code, label, key] of CLASSES) {
+    const b = document.createElement("button");
+    b.dataset.code = code;
+    b.innerHTML = `<span>${label}</span><kbd>${key}</kbd>`;
+    b.onclick = () => setClass(code);
+    classes.appendChild(b);
+  }
+  const toggles = $("#toggles");
+  toggles.innerHTML = "";
+  for (const s of SEASONS) {
+    const wrap = document.createElement("div");
+    wrap.className = "toggle";
+    wrap.innerHTML = `<b>${s[0] + s.slice(1).toLowerCase()}</b><div class="seg" data-season="${s}"></div>`;
+    const seg = wrap.querySelector(".seg");
+    for (const v of ["Y","N","NA"]) {
+      const b = document.createElement("button");
+      b.dataset.v = v; b.textContent = v;
+      b.onclick = () => cycle(s, v);
+      seg.appendChild(b);
+    }
+    toggles.appendChild(wrap);
+  }
+}
+
+function show() {
+  if (!order.length) return;
+  idx = Math.max(0, Math.min(idx, order.length - 1));
+  const r = rows.find(x => x.sample_id === order[idx]);
+  $("#sid").textContent = r.sample_id;
+  $("#zid").textContent = r.zone_id || "";
+  $("#note").value = r.notes || "";
+
+  for (const s of SEASONS) {
+    const img = $("#img-" + s);
+    const url = images[s] && images[s][r.sample_id];
+    img.src = url || `${s}/${r.sample_id}.png`;
+    const state = document.querySelector(`.season[data-season="${s}"] .state`);
+    const v = r[s.toLowerCase() + "_rice"];
+    state.textContent = v ? `rice: ${v}` : "not set";
+  }
+  document.querySelectorAll("#classes button").forEach(b =>
+    b.classList.toggle("on", b.dataset.code === r.reference_class));
+  for (const s of SEASONS) {
+    const v = r[s.toLowerCase() + "_rice"];
+    document.querySelectorAll(`.seg[data-season="${s}"] button`).forEach(b =>
+      b.classList.toggle("on", b.dataset.v === v));
+  }
+  const labelled = rows.filter(isLabelled).length;
+  $("#counter").textContent = `${idx + 1} / ${order.length} shown · ${labelled}/${rows.length} complete`;
+  $("#progress").style.width = (100 * labelled / rows.length) + "%";
+  $("#interpreter").value = interpreter;
+  validate(r);
+}
+
+function validate(r) {
+  const box = $("#warn");
+  const msgs = [];
+  const classRice = RICE.has(r.reference_class);
+  const anyRice = SEASONS.some(s => r[s.toLowerCase() + "_rice"] === "Y");
+  if (r.reference_class && classRice && r[r.reference_class.toLowerCase() + "_rice"] === "N")
+    msgs.push(`Land cover is ${r.reference_class} but ${r.reference_class} rice = N.`);
+  if (r.reference_class && !classRice && anyRice)
+    msgs.push(`Land cover is ${r.reference_class} but at least one season says rice.`);
+  if (r.confidence === "low" && !r.notes)
+    msgs.push("Low confidence without a note.");
+  if (msgs.length) { box.innerHTML = msgs.map(m => "• " + m).join("<br>"); box.classList.remove("hidden"); box.classList.remove("err"); }
+  else box.classList.add("hidden");
+}
+
+function setClass(code) {
+  const r = current(); if (!r) return;
+  r.reference_class = r.reference_class === code ? "" : code;
+  if (!r.reference_source) r.reference_source = "s2_timeseries";
+  if (!r.confidence) r.confidence = "high";
+  save(); show();
+}
+function cycle(season, force) {
+  const r = current(); if (!r) return;
+  const key = season.toLowerCase() + "_rice";
+  const seq = ["Y","N","NA"];
+  const next = force || seq[(seq.indexOf(r[key]) + 1) % seq.length];
+  r[key] = r[key] === next ? "" : next;
+  if (!r[season.toLowerCase() + "_confidence"]) r[season.toLowerCase() + "_confidence"] = "high";
+  save(); show();
+}
+function cycleConfidence() {
+  const r = current(); if (!r) return;
+  const seq = ["high","medium","low"];
+  r.confidence = seq[(seq.indexOf(r.confidence) + 1) % seq.length] || "high";
+  save(); show();
+}
+function go(step) {
+  const next = idx + step;
+  if (next < 0 || next >= order.length) return;
+  idx = next; show();
+}
+function current() { return rows.find(x => x.sample_id === order[idx]); }
+
+function rebuildOrder() {
+  const mode = $("#filter").value;
+  order = rows.filter(r => {
+    if (mode === "all") return true;
+    if (mode === "flagged") return r.confidence === "low" || (r.notes || "").length > 0;
+    return !isLabelled(r);
+  }).map(r => r.sample_id);
+  if (!order.length) order = rows.map(r => r.sample_id);
+  idx = 0;
+}
+
+/* ---------- events ---------- */
+$("#csv").onchange = async (e) => {
+  const file = e.target.files[0]; if (!file) return;
+  rows = parseCSV(await file.text());
+  for (const r of rows) {
+    for (const f of FIELDS) if (!(f in r)) r[f] = "";
+    if (!r.season_or_lulc) r.season_or_lulc = "LULC";
+  }
+  $("#setupMsg").textContent = `${rows.length} points loaded. Enter your initials, then Start.`;
+};
+
+$("#folder").onchange = (e) => {
+  urls.forEach(u => URL.revokeObjectURL(u)); urls = []; images = {};
+  for (const file of e.target.files) {
+    const parts = (file.webkitRelativePath || file.name).split("/");
+    const season = parts.find(p => ["BORO","AMAN","AUS"].includes(p.toUpperCase()));
+    if (!season || !file.name.toLowerCase().endsWith(".png")) continue;
+    const key = season.toUpperCase();
+    const id = file.name.replace(/\.png$/i, "");
+    const url = URL.createObjectURL(file); urls.push(url);
+    (images[key] = images[key] || {})[id] = url;
+  }
+  const counts = SEASONS.map(s => (images[s] ? Object.keys(images[s]).length : 0));
+  $("#setupMsg").textContent += ` Chips: Boro ${counts[0]}, Aman ${counts[1]}, Aus ${counts[2]}.`;
+};
+
+$("#start").onclick = () => {
+  if (!rows.length) { $("#setupMsg").textContent = "Load the CSV first."; return; }
+  interpreter = $("#interpreter").value.trim();
+  if (!interpreter) { $("#setupMsg").textContent = "Enter your initials first (separate storage per interpreter)."; return; }
+  for (const r of rows) if (interpreter) r.interpreter_id = interpreter;
+  restore(interpreter);
+  rebuildOrder(); buildControls();
+  $("#setup").classList.add("hidden"); $("#app").classList.remove("hidden");
+  show();
+};
+$("#filter").onchange = () => { if (!$("#app").classList.contains("hidden")) { rebuildOrder(); show(); } };
+$("#interpreter").oninput = (e) => {
+  interpreter = e.target.value.trim();
+  for (const r of rows) if (interpreter) r.interpreter_id = interpreter;
+  save();
+};
+$("#prev").onclick = () => go(-1);
+$("#next").onclick = () => { const r = current(); if (r) r.notes = $("#note").value; save(); go(1); };
+$("#flag").onclick = cycleConfidence;
+$("#note").onchange = () => { const r = current(); if (r) { r.notes = $("#note").value; save(); show(); } };
+$("#export").onclick = () => {
+  for (const r of rows) { if (interpreter) r.interpreter_id = interpreter;
+    if (!r.reference_source) r.reference_source = "s2_timeseries"; }
+  const incomplete = rows.filter(r => !isLabelled(r));
+  if (incomplete.length && !confirm(`${incomplete.length} points are incomplete. Export anyway?`)) return;
+  const blob = new Blob([toCSV(rows)], { type: "text/csv" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = `interpretation_${new Date().toISOString().slice(0,10)}.csv`;
+  a.click();
+};
+
+document.addEventListener("keydown", (e) => {
+  if ($("#app").classList.contains("hidden")) return;
+  if (["INPUT","TEXTAREA","SELECT"].includes(e.target.tagName)) return;
+  const map = {b:"BORO",a:"AUS",m:"AMAN",c:"OTHER_CROPLAND",o:"ORCHARD",
+               v:"OTHER_VEG",u:"BUILT",w:"WATER",r:"BARE"};
+  const k = e.key.toLowerCase();
+  if (map[k]) { e.preventDefault(); setClass(map[k]); return; }
+  if (k === "1") { e.preventDefault(); cycle("BORO"); return; }
+  if (k === "2") { e.preventDefault(); cycle("AMAN"); return; }
+  if (k === "3") { e.preventDefault(); cycle("AUS"); return; }
+  if (k === "l") { e.preventDefault(); cycleConfidence(); return; }
+  if (k === "n") { e.preventDefault(); $("#note").focus(); return; }
+  if (k === "enter" || k === "arrowright") { e.preventDefault(); $("#next").click(); return; }
+  if (k === "arrowleft") { e.preventDefault(); go(-1); return; }
+});
+</script>
+</body>
+</html>

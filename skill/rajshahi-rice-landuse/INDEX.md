@@ -43,6 +43,7 @@ but must not redefine shared definitions.
 | `scripts/benchmark_products.py` | Accuracy and Change Analyst | Implemented (needs manual downloads) |
 | `scripts/study_manifest.py` | Data Steward | Implemented |
 | `scripts/run_all.sh` | Data Steward | Implemented |
+| `tools/label_tool.html` | Accuracy and Change Analyst | Implemented (keyboard labelling) |
 | `scripts/load_tables.py` | Data Steward | Implemented |
 
 ## Execution order

@@ -250,6 +250,16 @@ def main() -> int:
         table[blank] = ""
     table.to_csv(TABLE_DIR / "interpretation_sheet.csv", index=False)
 
+    # Reduced sheet for fast keyboard or spreadsheet entry. Provenance fields
+    # (source, date, per-season confidence) are filled with defaults at import.
+    quick_columns = [
+        "sample_id", "reference_year", "zone_id",
+        "chip_2020_BORO", "chip_2020_AMAN", "chip_2020_AUS",
+        "reference_class", "boro_rice", "aus_rice", "aman_rice",
+        "confidence", "interpreter_id", "notes",
+    ]
+    table[quick_columns].to_csv(TABLE_DIR / "interpretation_quick.csv", index=False)
+
     summary = {
         "artifact": "reference_sample_design",
         "reference_year": args.year,

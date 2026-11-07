@@ -3,6 +3,47 @@
 How to label the 506-point reference sample so that accuracy and area estimates are
 defensible. Follow this exactly; deviations must be recorded in the manifest.
 
+## 0. Fast path (recommended)
+
+Use the browser labelling tool instead of editing 19 columns by hand:
+
+1. Extract the chips so you have `chips/2020/{BORO,AMAN,AUS}/`.
+2. Open `skill/rajshahi-rice-landuse/tools/label_tool.html` in Chrome or Edge.
+3. Load `tables/interpretation_quick.csv`.
+4. Select the `chips/2020` folder when prompted.
+5. Enter your initials, then label with the keyboard.
+6. Export the CSV and replace `tables/interpretation_quick.csv` with it
+   (or keep it as `interpretation_<date>.csv`).
+
+Keyboard:
+
+| Key | Action |
+| --- | --- |
+| `b` `a` `m` | land cover Boro / Aus / Aman |
+| `c` `o` `v` | other crop / orchard / other vegetation |
+| `u` `w` `r` | built-up / water / bare |
+| `1` | cycle Boro rice: Y → N → NA |
+| `2` | cycle Aman rice |
+| `3` | cycle Aus rice |
+| `l` | cycle confidence |
+| `n` | jump to note |
+| `Enter` / `→` | next point |
+| `←` | previous point |
+
+Why this is faster and still accurate:
+
+- All three seasons are shown together, so you cannot copy one season's answer.
+- The map class is never displayed, preserving blindness.
+- Every point requires one land-cover class and a decision for all three seasons.
+- Progress is saved in the browser as you go; you can stop and resume.
+- It warns when the land-cover class contradicts the seasonal calls, or when
+  confidence is low without a note.
+- Export is always in the full schema that `import_labels.py` expects.
+
+The reduced sheet has 13 columns instead of 19; source, date and per-season
+confidence are filled with defaults on import. Use the full sheet only if you
+need to record those explicitly.
+
 ## 1. Blinding
 
 Interpreters must not see the map class or the stratum.

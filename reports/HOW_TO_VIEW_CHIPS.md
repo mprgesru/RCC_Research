@@ -90,6 +90,18 @@ Six example chips are in [`figures/chip_examples/`](figures/chip_examples/):
 
 These examples are deliberately small enough to commit (under 1 MB total).
 
+## Label with the browser tool
+
+The fastest route is `skill/rajshahi-rice-landuse/tools/label_tool.html`:
+
+1. Open it in Chrome or Edge.
+2. Load `tables/interpretation_quick.csv`.
+3. Select the `chips/2020` folder.
+4. Label with the keyboard, then export the CSV.
+
+See [SAMPLE_INTERPRETATION_GUIDE.md](SAMPLE_INTERPRETATION_GUIDE.md) for the keys
+and decision rules.
+
 ## Which file to label
 
 Use `tables/interpretation_sheet.csv`. Each row has three chip paths
