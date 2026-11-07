@@ -226,23 +226,21 @@ def main() -> int:
     blinded = samples.drop(columns="geometry")[
         ["sample_id", "reference_year", "season", "zone_id"]
     ].copy()
-    blinded["chip_2020_AMAN"] = [
-        str(data_root / "chips" / str(args.year) / "AMAN" / f"{sid}.png")
-        for sid in blinded["sample_id"]
-    ]
     table = pd.DataFrame(
         {
             "sample_id": blinded["sample_id"],
             "reference_year": blinded["reference_year"],
             "season_or_lulc": blinded["season"],
             "zone_id": blinded["zone_id"],
-            "chip_path": blinded["chip_2020_AMAN"],
-            "reference_class": "",
-            "confidence": "",
-            "interpreter_id": "",
-            "notes": "",
         }
     )
+    for label in ("BORO", "AMAN", "AUS"):
+        table[f"chip_2020_{label}"] = [
+            str(data_root / "chips" / str(args.year) / label / f"{sid}.png")
+            for sid in blinded["sample_id"]
+        ]
+    for blank in ("reference_class", "confidence", "interpreter_id", "notes"):
+        table[blank] = ""
     table.to_csv(TABLE_DIR / "interpretation_sheet.csv", index=False)
 
     summary = {

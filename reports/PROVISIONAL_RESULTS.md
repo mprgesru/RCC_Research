@@ -219,9 +219,10 @@ not be run with pseudo-labels for any reported figure.
 
 ## Reference chips
 
-All 527 chips were exported for 2020 Aman (three panels: true colour, false
-colour, NDVI), blinded to the map class, with `tables/interpretation_sheet.csv`
-ready for labelling.
+All 527 points have chips for all three seasons (1,581 images), exported from
+Sentinel-2 as three panels (true colour, false colour, NDVI), blinded to the map
+class. `tables/interpretation_sheet.csv` lists the three chip paths per point with
+blank label fields.
 
 ## What must happen before results are reported
 
