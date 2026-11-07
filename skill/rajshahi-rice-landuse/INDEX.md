@@ -26,7 +26,7 @@ but must not redefine shared definitions.
 | --- | --- | --- |
 | `scripts/build_zones.py` | Data Steward | Implemented |
 | `scripts/make_db.py` | Data Steward | Implemented |
-| `scripts/stac_inventory.py` | Data Steward | Pending |
+| `scripts/stac_inventory.py` | Data Steward | Implemented |
 | `scripts/download_gcd_rice.py` | Data Steward | Pending |
 | `scripts/build_composites.py` | Phenology Mapper | Pending |
 | `scripts/classify.py` | Phenology Mapper | Pending |

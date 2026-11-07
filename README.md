@@ -18,7 +18,7 @@ scene cache live outside Git (see [Where the data lives](#where-the-data-lives))
 | Processing skill (`skill/rajshahi-rice-landuse`) | ✅ Scaffolded |
 | Study boundaries | ✅ Committed |
 | Database schema | ✅ Committed |
-| Source inventory (STAC, GCD-Rice) | ⏳ Pending |
+| Source inventory (STAC, GCD-Rice) | ✅ Committed |
 | Full 1990–2025 processing run | ⏳ Pending |
 
 ## Repository layout

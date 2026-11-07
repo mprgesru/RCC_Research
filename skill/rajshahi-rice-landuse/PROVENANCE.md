@@ -48,8 +48,8 @@ definition.
 | --- | --- | --- |
 | Landsat C2 L2 | AWS Earth Search STAC `https://earth-search.aws.element84.com/v1` | None |
 | Landsat C2 L2 (fallback) | Microsoft Planetary Computer STAC | None |
-| Sentinel-2 L2A | Earth Search `sentinel-2-l2a` | None |
-| Sentinel-1 | Earth Search / Planetary Computer | None |
+| Sentinel-2 L2A | Planetary Computer `sentinel-2-l2a` | None |
+| Sentinel-1 | Earth Search `sentinel-1-grd` | None |
 
 Google Earth Engine is deliberately not used. It requires account credentials and
 moves processing off this host; public STAC catalogs cover the protocol's needs.
@@ -58,8 +58,8 @@ moves processing off this host; public STAC catalogs cover the protocol's needs.
 
 | Product | Reference | Status |
 | --- | --- | --- |
-| GCD-Rice 1990–2023 | Science Data Bank, DOI 10.57760/sciencedb.21665 | Landing page reachable; bulk host returned 403 from build host |
-| Zhao et al. 2026 (1995–2024) | ESSD, DOI 10.5194/essd-18-5583-2026 | Location to be confirmed |
+| GCD-Rice 1990–2023 | Science Data Bank, DOI 10.57760/sciencedb.21665 | Landing page reachable; bulk host returned 403 from build host; manual download required |
+| Zhao et al. 2026 (1995–2024) | Zenodo, DOI 10.5281/zenodo.21349862 | Available; four ~500 MB GeoTIFFs (1995, 2005, 2015, 2024) |
 | BBS yearbooks | `bbs.gov.bd` | Unreachable from build host; manual download required |
 
 ## Update procedure

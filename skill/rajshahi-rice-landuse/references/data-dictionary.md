@@ -70,6 +70,18 @@ scene count. If support is inadequate, keep the target-year result with
 `low_support = true` and additionally produce a three-year composite centred on the
 target year, labelled as a composite.
 
+### Sensor availability (from the 2026-11-07 inventory)
+
+| Sensor | Availability at this AOI |
+| --- | --- |
+| Landsat 4/5/7/8/9 | All eight target years |
+| Sentinel-1 GRD | 2014 onward |
+| Sentinel-2 L2A | 2016 onward via Planetary Computer; **no scenes in 2015** |
+
+Consequently the Sentinel-enhanced comparison covers 2020 and 2025 with S1 + S2.
+If 2015 is retained, it must be S1-only and labelled as such; it is not comparable
+to the S1 + S2 years.
+
 ## 4. Land-cover classes
 
 | Code | Class | Notes |

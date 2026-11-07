@@ -18,7 +18,7 @@ role does not process data; it prevents drift.
 | Skill scaffold | Complete | Files present, internal checks pass |
 | Study boundaries | Complete | Zone table reviewed by owner |
 | Database schema | Complete | Schema review |
-| Source inventory | Pending | Scene counts per year and season reported |
+| Source inventory | Complete | Scene counts per year and season reported |
 | Product ingest (GCD-Rice) | Pending | Checksums and coverage confirmed |
 | Pilot years 2020 and 2025 | Pending | Accuracy and support review |
 | Full 1990–2025 run | Pending | Per-year manifests complete |
