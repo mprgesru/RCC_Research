@@ -15,9 +15,9 @@ role does not process data; it prevents drift.
 
 | Stage | State | Gate |
 | --- | --- | --- |
-| Skill scaffold | In progress | Files present, links resolve |
-| Study boundaries | In progress | Zone table reviewed by owner |
-| Database schema | Pending | Schema review |
+| Skill scaffold | Complete | Files present, internal checks pass |
+| Study boundaries | Complete | Zone table reviewed by owner |
+| Database schema | Complete | Schema review |
 | Source inventory | Pending | Scene counts per year and season reported |
 | Product ingest (GCD-Rice) | Pending | Checksums and coverage confirmed |
 | Pilot years 2020 and 2025 | Pending | Accuracy and support review |

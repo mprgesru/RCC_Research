@@ -1,0 +1,54 @@
+{
+  "artifact": "study_database",
+  "generated_utc": "2026-11-07T06:27:54+00:00",
+  "engine": "SQLite 3 / GeoPackage",
+  "inputs": {
+    "ddl": "schema/rajshahi_rice.sql",
+    "ddl_sha256": "08557a9440bcd12ea7471560ebde3e167cbace6347f7eba5d47b8e235ecfa778",
+    "zones_source": "boundaries/rcc_zones.gpkg"
+  },
+  "outputs": {
+    "gpkg": {
+      "path": "/home/coder/research-runtime/rajshahi-rice/db/rajshahi_rice.gpkg",
+      "sha256": "784e9a0a883c09fd6f5955c28bae36e2bd4cbf6983a603021eb8708432054289",
+      "bytes": 339968
+    },
+    "sqlite": {
+      "path": "/home/coder/research-runtime/rajshahi-rice/db/rajshahi_rice.sqlite",
+      "sha256": "97552cba00c09c2d373d4b2bf7263c37bf5058b0b57d1d4970a9dd9b2c7dafc4",
+      "bytes": 53248
+    }
+  },
+  "row_counts": {
+    "area_estimates": 0,
+    "checksums": 0,
+    "class_legend": 10,
+    "data_sources": 10,
+    "map_runs": 0,
+    "reference_samples": 0,
+    "season_legend": 6,
+    "transition_estimates": 0,
+    "ward_summary": 0,
+    "zones": 5
+  },
+  "tables": [
+    "area_estimates",
+    "checksums",
+    "class_legend",
+    "data_sources",
+    "map_runs",
+    "reference_samples",
+    "season_legend",
+    "transition_estimates",
+    "ward_summary",
+    "zones"
+  ],
+  "checks": [
+    "expected tables present",
+    "zone rows == 5",
+    "reference_samples empty",
+    "no foreign key violations",
+    "class legend rows == 10",
+    "constraints reject invalid year, season, zone and negative area"
+  ]
+}
