@@ -25,6 +25,7 @@ scene cache live outside Git (see [Where the data lives](#where-the-data-lives))
 | Validation | 🚧 506-point frame built — labels pending |
 | Benchmark products | 🚧 Script ready — manual download required |
 | Manuscript draft | ✅ [Draft with methods and deviations](reports/MANUSCRIPT_DRAFT.md) |
+| Reference chips | ✅ [How to view them](reports/HOW_TO_VIEW_CHIPS.md) — release `chips-2020-v1` |
 
 ## Repository layout
 

@@ -35,6 +35,7 @@ but must not redefine shared definitions.
 | `scripts/validate.py` | Accuracy and Change Analyst | Implemented (Olofsson estimator) |
 | `scripts/sample_design.py` | Accuracy and Change Analyst | Implemented (stratified design) |
 | `scripts/export_chips.py` | Accuracy and Change Analyst | Implemented (blinded chips) |
+| `scripts/make_chip_viewer.py` | Accuracy and Change Analyst | Implemented (HTML viewer) |
 | `scripts/build_sar_composites.py` | Phenology Mapper | Implemented |
 | `scripts/classify_rf.py` | Phenology Mapper | Implemented (needs reference labels) |
 | `scripts/support_summary.py` | Data Steward | Implemented |
