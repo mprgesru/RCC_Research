@@ -78,3 +78,9 @@ Each output has a JSON sidecar with the fields defined in the data dictionary.
 
 Not implemented. Expected scripts: `scripts/build_composites.py`,
 `scripts/classify.py`.
+
+Implementation note: both scripts now exist. The composite builder is complete.
+The classifier is a **provisional, uncalibrated rule set** defined in
+`references/classification-thresholds.json`; it has no independent validation and
+must not be used to report accuracy or final areas. Random-forest training waits
+for reference samples.

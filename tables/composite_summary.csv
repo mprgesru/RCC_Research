@@ -1,0 +1,7 @@
+reference_year,season,map_id,scenes_used,scenes_failed,obs_median,obs_mean,obs_zero_pixels,low_support,composite_path
+1990,AMAN,1990_AMAN_landsat,5,0,2.0,2.04,88,1,/home/coder/research-runtime/rajshahi-rice/rasters/composites/composite_1990_AMAN_30m.tif
+1990,AUS,1990_AUS_landsat,4,0,2.0,1.8,43,1,/home/coder/research-runtime/rajshahi-rice/rasters/composites/composite_1990_AUS_30m.tif
+1990,BORO,1990_BORO_landsat,8,0,6.0,5.74,0,0,/home/coder/research-runtime/rajshahi-rice/rasters/composites/composite_1990_BORO_30m.tif
+1995,AUS,1995_AUS_landsat,5,0,2.0,1.77,154,1,/home/coder/research-runtime/rajshahi-rice/rasters/composites/composite_1995_AUS_30m.tif
+1995,BORO,1995_BORO_landsat,10,0,5.0,4.98,0,0,/home/coder/research-runtime/rajshahi-rice/rasters/composites/composite_1995_BORO_30m.tif
+2020,BORO,2020_BORO_landsat,23,0,14.0,13.8,0,0,/home/coder/research-runtime/rajshahi-rice/rasters/composites/composite_2020_BORO_30m.tif

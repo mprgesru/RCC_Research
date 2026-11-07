@@ -28,10 +28,10 @@ but must not redefine shared definitions.
 | `scripts/make_db.py` | Data Steward | Implemented |
 | `scripts/stac_inventory.py` | Data Steward | Implemented |
 | `scripts/download_gcd_rice.py` | Data Steward | Pending |
-| `scripts/build_composites.py` | Phenology Mapper | Pending |
-| `scripts/classify.py` | Phenology Mapper | Pending |
-| `scripts/validate.py` | Accuracy and Change Analyst | Pending |
-| `scripts/load_tables.py` | Data Steward | Pending |
+| `scripts/build_composites.py` | Phenology Mapper | Implemented |
+| `scripts/classify.py` | Phenology Mapper | Implemented (provisional rule set) |
+| `scripts/validate.py` | Accuracy and Change Analyst | Blocked: needs reference samples |
+| `scripts/load_tables.py` | Data Steward | Implemented |
 
 ## Execution order
 

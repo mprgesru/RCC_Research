@@ -1,0 +1,35 @@
+{
+  "version": "0.1.0-provisional",
+  "status": "uncalibrated",
+  "note": "Thresholds are literature-informed placeholders. They must be calibrated against independent reference samples before any result is treated as final. Each season keeps its own thresholds because the protocol forbids transferring one season's thresholds to another.",
+  "score_weights": {
+    "lswi_max": 0.5,
+    "ndvi_amplitude": 0.3,
+    "ndvi_max": 0.2
+  },
+  "score_scaling": {
+    "lswi_max_floor": 0.0,
+    "lswi_max_span": 0.4,
+    "ndvi_amplitude_floor": 0.2,
+    "ndvi_amplitude_span": 0.4,
+    "ndvi_max_floor": 0.4,
+    "ndvi_max_span": 0.3
+  },
+  "seasons": {
+    "BORO": {
+      "lswi_max": 0.10,
+      "ndvi_amplitude": 0.25,
+      "ndvi_max": 0.50
+    },
+    "AUS": {
+      "lswi_max": 0.10,
+      "ndvi_amplitude": 0.25,
+      "ndvi_max": 0.50
+    },
+    "AMAN": {
+      "lswi_max": 0.10,
+      "ndvi_amplitude": 0.25,
+      "ndvi_max": 0.50
+    }
+  }
+}

@@ -19,7 +19,7 @@ scene cache live outside Git (see [Where the data lives](#where-the-data-lives))
 | Study boundaries | ✅ Committed |
 | Database schema | ✅ Committed |
 | Source inventory (STAC, GCD-Rice) | ✅ Committed |
-| Full 1990–2025 processing run | ⏳ Pending |
+| Full 1990–2025 processing run | 🚧 Provisional products generated |
 
 ## Repository layout
 
