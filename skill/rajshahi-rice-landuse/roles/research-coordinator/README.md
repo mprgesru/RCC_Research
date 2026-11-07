@@ -24,7 +24,7 @@ role does not process data; it prevents drift.
 | Full 1990–2025 run | Complete (provisional) | Per-year manifests complete |
 | Land cover (Step 5) | Complete (provisional) | Nine-class derived layer |
 | Transitions (Step 7) | Complete (mapped only) | Not interpretable until calibrated |
-| Validation (Step 6) | Blocked | Needs reference samples |
+| Validation (Step 6) | Frame complete | 506-point stratified design, labels pending |
 | Release | Pending | Zenodo DOI and checksums |
 
 ## Deliverables

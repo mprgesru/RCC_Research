@@ -136,6 +136,46 @@ land-management process at that scale; it is classification noise.
 **Do not report any transition result.** The machinery is correct; the inputs to
 it are not yet calibrated.
 
+## Step 3 — reference sample frame
+
+The stratified design was sized with the Cochran/Olofsson formula using
+conjectured user's accuracies and 2020 land-cover strata (9 classes × 3 zone
+groups = 27 strata).
+
+| Target SE (overall accuracy) | Required n |
+| --- | --- |
+| 0.010 | 2,017 |
+| 0.020 | 506 |
+| 0.030 | 225 |
+| 0.040 | 127 |
+
+Adopted: **SE 0.02, n = 506**, minimum 20 per non-empty stratum, one point per
+1 km block. The frame is written to `reference_samples` (527 points after
+allocation), `tables/sample_design.csv` and a blinded
+`tables/interpretation_sheet.csv`.
+
+Chips are exported from Sentinel-2 L2A as three-panel images (true colour, false
+colour, NDVI). Chip titles and the interpretation sheet deliberately omit the
+mapped class so that labelling is independent.
+
+A first visual check already confirms the over-detection problem: sample
+`S2020-0001` is mapped as Boro rice inside RCC but the imagery shows dense
+homestead vegetation and trees.
+
+**No accuracy has been computed.** The estimator is implemented and tested on a
+synthetic copy; it will not produce numbers until real labels exist.
+
+## Benchmark products
+
+| Product | Automated access | Status |
+| --- | --- | --- |
+| GCD-Rice | Science Data Bank bulk host returns 403 | Manual download |
+| Zhao et al. 2026 | Zenodo file host returns 403 from build host | Manual download |
+| Singha et al. 2017 | figshare download host returns 403 | Manual download |
+
+Only the metadata APIs are reachable. Product comparison is therefore blocked
+until the files are downloaded manually.
+
 ## What must happen before results are reported
 
 | Step | Dependency |
