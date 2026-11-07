@@ -28,9 +28,8 @@ confidence intervals. `[PENDING]` We report that rice extent changed from X to Y
 in RCC and from A to B km² in the outer ring, with Z% of mapped rice loss
 attributable to built-up conversion. `[PENDING]` Independent validation yields an
 overall accuracy of X% (95% CI) and area estimates that differ from raw pixel
-counts by Y%. We also quantify disagreement between our maps and three published
+counts by Y%. We also quantify disagreement between our maps and two published
 rice products in the fragmented urban fringe, where mixed pixels are most severe.
-
 **Plain-language summary.** `[PENDING]`
 
 ---
@@ -118,14 +117,14 @@ November–April (labelled by harvest year), Aus May–August, Aman June–Novem
 
 | Product | Period | Resolution | Role |
 | --- | --- | --- | --- |
-| GCD-Rice (Li et al., 2025) | 1990–2023 | 30 m, three seasons | Benchmark |
 | Zhao et al. (2026) | 1995–2024 | 30 m | Benchmark |
 | Singha et al. (2019) | 2017 | Sentinel-1 maps | Benchmark |
-| BBS agricultural yearbooks | annual | district | External consistency |
+| GCD-Rice (Li et al., 2025) | 1990–2023 | 30 m, three seasons | Not used: files not retrievable |
+| BBS agricultural yearbooks | annual | district | Not used: site unreachable |
 
-Benchmarks are comparisons, not truth. File hosts for all three products returned
-HTTP 403 from the processing environment; retrieval is manual and recorded in the
-manifest.
+Benchmarks are comparisons, not truth. The two retrievable products form the
+final comparison set; GCD-Rice and BBS are documented as limitations and do not
+enter the analysis.
 
 ---
 
@@ -244,10 +243,14 @@ require validated labels. Cumulative zones are never summed with their component
 
 ### 3.8 Product benchmarking
 
-Benchmarks are reprojected to the study grid and compared by zone using agreement
-and intersection-over-union. Because product class codes differ, rice values are
-declared explicitly per product. Agreement is not accuracy and is not reported as
-such.
+The final benchmark set is Zhao et al. (2026) for 1995, 2005, 2015 and 2024 and
+Singha et al. (2019) for Boro, Aus and Aman in 2017. Singha 2017 is compared with
+both 2015 and 2020 because it lies between them. Benchmarks are reprojected to the
+study grid and compared by zone using agreement and intersection-over-union.
+Because product class codes differ, rice values are declared explicitly per
+product. Agreement is not accuracy and is not reported as such. GCD-Rice and BBS
+are excluded because their files were not retrievable; both remain cited as
+limitations.
 
 ### 3.9 Reproducibility
 
@@ -292,8 +295,11 @@ Documented deviations and their justification:
 4. **Random forest uses pseudo-labels.** It is excluded from results; the
    manuscript reports this as a design constraint rather than presenting inflated
    areas.
-5. **Benchmark downloads blocked.** The environment received HTTP 403 from the
-   file hosts; the comparison is prepared but not executed.
+5. **Benchmark scope limited to two products.** GCD-Rice and the BBS yearbooks
+   could not be retrieved from the working environment. We therefore benchmark
+   against Zhao et al. (2026) and Singha et al. (2019) only, and report the
+   omission rather than substituting another product. The estimator and the
+   comparison script accept additional products without modification.
 6. **Boundary status.** The RCC layer is operational, not cadastral, and its
    licence is unstated. Historical boundary sensitivity is not attempted.
 

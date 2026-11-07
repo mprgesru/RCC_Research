@@ -167,14 +167,19 @@ synthetic copy; it will not produce numbers until real labels exist.
 
 ## Benchmark products
 
-| Product | Automated access | Status |
-| --- | --- | --- |
-| GCD-Rice | Science Data Bank bulk host returns 403 | Manual download |
-| Zhao et al. 2026 | Zenodo file host returns 403 from build host | Manual download |
-| Singha et al. 2017 | figshare download host returns 403 | Manual download |
+Final benchmark set: Zhao et al. (2026) for 1995, 2005, 2015 and 2024, and
+Singha et al. (2019) for Boro, Aus and Aman in 2017. Singha 2017 is compared with
+both 2015 and 2020.
 
-Only the metadata APIs are reachable. Product comparison is therefore blocked
-until the files are downloaded manually.
+| Product | Access | Status |
+| --- | --- | --- |
+| Zhao et al. 2026 | Zenodo, `10.5281/zenodo.21349862` | Downloaded manually |
+| Singha et al. 2017 | figshare, `10.6084/m9.figshare.7873157` | Downloaded manually |
+| GCD-Rice | Science Data Bank, `10.57760/sciencedb.21665` | Not used — not retrievable |
+| BBS yearbooks | bbs.gov.bd | Not used — unreachable |
+
+The comparison script finds the GeoTIFFs by file name, so they do not need a fixed
+folder. Run it with `--data-root` and, if needed, `--external-dir`.
 
 ## Sentinel-1 feature stack
 

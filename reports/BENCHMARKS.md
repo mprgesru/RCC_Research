@@ -1,123 +1,109 @@
-# Benchmark Data Sources
+# Benchmark Data Sources — Final Set
 
-Downloads are manual because the file hosts returned HTTP 403 to the build host.
-Download from a browser or from your own machine, then place the files in the
-paths below.
+The study uses **two benchmark products**: Zhao et al. (2026) and Singha et al.
+(2019). GCD-Rice and the BBS yearbooks were assessed and are **out of scope**
+because their files could not be retrieved from the available environment; this is
+recorded as a documented deviation in the manuscript.
 
-Target root:
-
-```text
-${RAJSHAHI_RICE_DATA_ROOT}/rajshahi-rice/external/
-├── zhao/
-├── singha/
-└── gcd_rice/
-```
+You do not need to place the files in one exact folder. The comparison script
+searches by file name across `--external-dir`, the data root, the current
+directory, the repository root, `~/Downloads` and the home directory, then reports
+what it found.
 
 ## 1. Zhao et al. 2026 — South and Southeast Asia, 30 m, 1995–2024
 
 - Landing page: <https://zenodo.org/records/21349862>
 - DOI: <https://doi.org/10.5281/zenodo.21349862>
-- Licence: see the record
-- Files: four ~0.5 GB GeoTIFFs. **You only need the Asia-wide ones**, not "India North".
+- Files needed: four Asia-wide GeoTIFFs. Do **not** download `India North 2024.tif`.
 
-| File (exact name required) | Size (bytes) | MD5 |
-| --- | --- | --- |
-| `South and Southeast Asia Paddy Rice 1995.tif` | 511,818,929 | `09fd6521f579fb3c328805c596ec5078` |
-| `South and Southeast Asia Paddy Rice 2005.tif` | 504,894,527 | `37a46aa4a9f5d782f611ba43b52d7ce7` |
-| `South and Southeast Asia Paddy Rice 2015.tif` | 521,319,463 | `a235ba14bf991a4aa46fe65ea6387063` |
-| `South and Southeast Asia Paddy Rice 2024.tif` | 470,463,280 | `0b18f8feadc2babfdfff5b95c2e02517` |
+| File | Size (bytes) | MD5 | Direct link |
+| --- | --- | --- | --- |
+| `South and Southeast Asia Paddy Rice 1995.tif` | 511,818,929 | `09fd6521f579fb3c328805c596ec5078` | <https://zenodo.org/records/21349862/files/South%20and%20Southeast%20Asia%20Paddy%20Rice%201995.tif?download=1> |
+| `South and Southeast Asia Paddy Rice 2005.tif` | 504,894,527 | `37a46aa4a9f5d782f611ba43b52d7ce7` | <https://zenodo.org/records/21349862/files/South%20and%20Southeast%20Asia%20Paddy%20Rice%202005.tif?download=1> |
+| `South and Southeast Asia Paddy Rice 2015.tif` | 521,319,463 | `a235ba14bf991a4aa46fe65ea6387063` | <https://zenodo.org/records/21349862/files/South%20and%20Southeast%20Asia%20Paddy%20Rice%202015.tif?download=1> |
+| `South and Southeast Asia Paddy Rice 2024.tif` | 470,463,280 | `0b18f8feadc2babfdfff5b95c2e02517` | <https://zenodo.org/records/21349862/files/South%20and%20Southeast%20Asia%20Paddy%20Rice%202024.tif?download=1> |
 
-Place them in `${RAJSHAHI_RICE_DATA_ROOT}/rajshahi-rice/external/zhao/`.
-
-Command line (resumable):
-
-```bash
-mkdir -p "$RAJSHAHI_RICE_DATA_ROOT/rajshahi-rice/external/zhao"
-cd "$RAJSHAHI_RICE_DATA_ROOT/rajshahi-rice/external/zhao"
-
-for y in 1995 2005 2015 2024; do
-  curl -L -C - \
-    -o "South and Southeast Asia Paddy Rice ${y}.tif" \
-    "https://zenodo.org/records/21349862/files/South%20and%20Southeast%20Asia%20Paddy%20Rice%20${y}.tif?download=1"
-done
-```
-
-## 2. Singha et al. 2019 — Bangladesh 2017, Sentinel-1
+## 2. Singha et al. 2019 — Bangladesh 2017, three seasons
 
 - Landing page: <https://figshare.com/articles/dataset/7873157>
 - DOI: <https://doi.org/10.6084/m9.figshare.7873157.v1>
-- Licence: see the record (CC BY 4.0 on the article)
-- Files: three Bangladesh GeoTIFFs, one per season.
 
-| File (exact name required) | Size (bytes) | MD5 | Direct link |
+| File | Size (bytes) | MD5 | Direct link |
 | --- | --- | --- | --- |
 | `Boro_BGD_2017_V1.tif` | 168,363,958 | `ca943fb47a3e8e16ceeaa7a2531df634` | <https://ndownloader.figshare.com/files/14658833> |
 | `Aus_BGD_2017_V1.tif` | 110,186,630 | `57e22f70a0db73638cd4c7a636c7a9e4` | <https://ndownloader.figshare.com/files/14658821> |
 | `Aman_BGD_2017_V1.tif` | 143,942,908 | `95d28bb40f4b92128b32a33a9a00cc45` | <https://ndownloader.figshare.com/files/14658812> |
 
-Place them in `${RAJSHAHI_RICE_DATA_ROOT}/rajshahi-rice/external/singha/`.
+## 3. Not used
+
+| Source | Reason |
+| --- | --- |
+| GCD-Rice 1990–2023 (DOI 10.57760/sciencedb.21665) | Science Data Bank bulk download not retrievable from the working environment |
+| BBS agricultural yearbooks (bbs.gov.bd) | Site unreachable from the working environment |
+
+Both are cited in the literature review and recorded as limitations. They can be
+added later without changing the estimator, because benchmarking is a comparison,
+not an input to the maps.
+
+## Comparison years
+
+| Product | Product year | Compared with our map |
+| --- | --- | --- |
+| Zhao 2026 | 1995 | 1995 union |
+| Zhao 2026 | 2005 | 2005 union |
+| Zhao 2026 | 2015 | 2015 union |
+| Zhao 2026 | 2024 | 2025 union (nearest target year) |
+| Singha 2017 | 2017 | 2015 and 2020, for Boro, Aus and Aman separately |
+
+Singha 2017 is compared with both adjacent target years because 2017 sits between
+2015 and 2020. Reporting both avoids implying a single nearest-year match.
+
+## Run
+
+Point the script at the study root. It will find the files wherever they are:
 
 ```bash
-mkdir -p "$RAJSHAHI_RICE_DATA_ROOT/rajshahi-rice/external/singha"
-cd "$RAJSHAHI_RICE_DATA_ROOT/rajshahi-rice/external/singha"
-curl -L -o Boro_BGD_2017_V1.tif https://ndownloader.figshare.com/files/14658833
-curl -L -o Aus_BGD_2017_V1.tif  https://ndownloader.figshare.com/files/14658821
-curl -L -o Aman_BGD_2017_V1.tif https://ndownloader.figshare.com/files/14658812
+python skill/rajshahi-rice-landuse/scripts/benchmark_products.py \
+  --data-root "$RAJSHAHI_RICE_DATA_ROOT"
 ```
 
-## 3. GCD-Rice 1990–2023 — 30 m, three seasons
-
-- Landing page: <https://www.scidb.cn/en/detail?dataSetId=68ea15cf08d7469f8c1a653f5589701a>
-- DOI: <https://doi.org/10.57760/sciencedb.21665>
-- Paper: <https://doi.org/10.1038/s41597-025-05374-1>
-- Structure: 16 country folders, each split by season; 918 GeoTIFFs in total.
-
-**Only the Bangladesh folder is needed.** On the landing page, open the data file
-list and download the files under the Bangladesh / `BGD` folder, for the seasons
-and years you want. There is no documented bulk API; use the browser download.
-
-Place them under `${RAJSHAHI_RICE_DATA_ROOT}/rajshahi-rice/external/gcd_rice/BGD/`.
-
-The comparison script currently covers Zhao and Singha. Once the GCD-Rice files
-are downloaded, share the file names and the years/seasons they represent and the
-mapping can be added.
-
-## 4. BBS agricultural yearbooks (external consistency check)
-
-- <https://bbs.gov.bd/pages/static-pages/6922e0d6933eb65569e28cbf>
-
-`bbs.gov.bd` is unreachable from the build host. District-level statistics cannot
-validate pixels, but they are the standard external check for total area.
-
-## Verify before running
+If auto-discovery misses them, point directly at the folder:
 
 ```bash
-cd "$RAJSHAHI_RICE_DATA_ROOT/rajshahi-rice/external"
-md5sum zhao/*.tif singha/*.tif
+python skill/rajshahi-rice-landuse/scripts/benchmark_products.py \
+  --data-root "$RAJSHAHI_RICE_DATA_ROOT" \
+  --external-dir "$HOME/Downloads"
 ```
 
-Compare against the tables above. A truncated download is the most common failure
-and will otherwise appear as a strange raster extent.
-
-## Run the comparison
+If our own products are elsewhere:
 
 ```bash
-python skill/rajshahi-rice-landuse/scripts/benchmark_products.py
+--products-dir /path/to/rajshahi-rice/rasters/products
 ```
 
 Outputs:
 
-- `tables/benchmark_products.csv` — agreement, intersection-over-union and rice
-  fraction by product, zone and season.
-- `manifests/benchmark.json` — record of which products were present.
+- `tables/benchmark_products.csv` — every product × year × zone row
+- `tables/benchmark_summary.csv` — mean agreement and IoU per product and season
+- `manifests/benchmark.json` — which files were found and where
 
-Agreement is not accuracy. This step answers "how well do published products
-represent the Rajshahi urban fringe", which is the study's stated contribution;
-it does not validate our map.
+## Verify downloads
 
-## Licensing and attribution
+```bash
+md5sum "South and Southeast Asia Paddy Rice 2015.tif" Boro_BGD_2017_V1.tif
+```
 
-Each product keeps its own licence. Cite the original papers:
+A truncated file will open with a wrong extent or fail to open. Checksums above
+are authoritative.
+
+## Interpretation
+
+Agreement and IoU measure how closely a published product matches our map. They
+are **not** accuracy. This step answers the study's stated contribution — how well
+published products represent the fragmented Rajshahi fringe — while accuracy still
+depends on the 527 interpreted reference points.
+
+## Attribution
 
 - Li, S. et al. (2025). *Scientific Data*. <https://doi.org/10.1038/s41597-025-05374-1>
 - Singha, M. et al. (2019). *Scientific Data* 6, 26. <https://doi.org/10.1038/s41597-019-0036-3>
