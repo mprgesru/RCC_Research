@@ -1,0 +1,130 @@
+{
+  "artifact": "study_boundaries",
+  "generated_utc": "2026-11-07T06:21:50+00:00",
+  "source": {
+    "service_url": "https://services.arcgis.com/5T5nSi527N4F7luB/arcgis/rest/services/Rajshahi_Wards_data/FeatureServer/0",
+    "portal_item": "bfdf7c83715a4b0781e113fb16fd2ab7",
+    "portal_title": "Rajshahi City Corporation EPI Digital Microplanning",
+    "owner": "digital_micplan",
+    "item_modified": "2024-10-15",
+    "licence": "unstated",
+    "attribution": "WHO/UNICEF EPI Digital Microplanning - Rajshahi City Corporation (2024)"
+  },
+  "parameters": {
+    "analysis_crs": "EPSG:32645",
+    "interchange_crs": "EPSG:4326",
+    "ward_count": 30,
+    "repaired_geometries": 1,
+    "buffer_inner_m": 5000,
+    "buffer_outer_m": 10000
+  },
+  "checks": {
+    "ward_area_sum_km2": 46.2287,
+    "dissolved_rcc_km2": 46.2267,
+    "expected_rcc_km2": 46.23,
+    "relative_error": 7.2e-05,
+    "part_union_difference_km2": 0.002011,
+    "rcc_ring_overlap_km2": 0.0,
+    "ring_ring_overlap_km2": 0.0
+  },
+  "zones": [
+    {
+      "zone_id": "RCC",
+      "zone_name": "City Corporation",
+      "zone_type": "core",
+      "distance_min_km": 0.0,
+      "distance_max_km": 0.0,
+      "area_km2": 46.2267,
+      "boundary_version": "2024-10-15",
+      "boundary_status": "official_operational",
+      "source_url": "https://services.arcgis.com/5T5nSi527N4F7luB/arcgis/rest/services/Rajshahi_Wards_data/FeatureServer/0"
+    },
+    {
+      "zone_id": "R0_5",
+      "zone_name": "Inner peri-urban ring",
+      "zone_type": "ring",
+      "distance_min_km": 0.0,
+      "distance_max_km": 5.0,
+      "area_km2": 252.2351,
+      "boundary_version": "2024-10-15",
+      "boundary_status": "official_operational",
+      "source_url": "https://services.arcgis.com/5T5nSi527N4F7luB/arcgis/rest/services/Rajshahi_Wards_data/FeatureServer/0"
+    },
+    {
+      "zone_id": "R5_10",
+      "zone_name": "Outer peri-urban ring",
+      "zone_type": "ring",
+      "distance_min_km": 5.0,
+      "distance_max_km": 10.0,
+      "area_km2": 394.2309,
+      "boundary_version": "2024-10-15",
+      "boundary_status": "official_operational",
+      "source_url": "https://services.arcgis.com/5T5nSi527N4F7luB/arcgis/rest/services/Rajshahi_Wards_data/FeatureServer/0"
+    },
+    {
+      "zone_id": "RCC_5",
+      "zone_name": "City plus 5 km",
+      "zone_type": "cumulative",
+      "distance_min_km": 0.0,
+      "distance_max_km": 5.0,
+      "area_km2": 298.4617,
+      "boundary_version": "2024-10-15",
+      "boundary_status": "official_operational",
+      "source_url": "https://services.arcgis.com/5T5nSi527N4F7luB/arcgis/rest/services/Rajshahi_Wards_data/FeatureServer/0"
+    },
+    {
+      "zone_id": "RCC_10",
+      "zone_name": "City plus 10 km",
+      "zone_type": "cumulative",
+      "distance_min_km": 0.0,
+      "distance_max_km": 10.0,
+      "area_km2": 692.6926,
+      "boundary_version": "2024-10-15",
+      "boundary_status": "official_operational",
+      "source_url": "https://services.arcgis.com/5T5nSi527N4F7luB/arcgis/rest/services/Rajshahi_Wards_data/FeatureServer/0"
+    }
+  ],
+  "outputs": [
+    {
+      "path": "boundaries/rcc_boundary.cpg",
+      "sha256": "3ad3031f5503a4404af825262ee8232cc04d4ea6683d42c5dd0a2f2a27ac9824",
+      "bytes": 5
+    },
+    {
+      "path": "boundaries/rcc_boundary.dbf",
+      "sha256": "6f03dc2460b1ed48d674ca7741766c03681e29512f772c910437cdb9b92a1a88",
+      "bytes": 427
+    },
+    {
+      "path": "boundaries/rcc_boundary.geojson",
+      "sha256": "68b6ab8c610b210d43155b2ca58519fd0650c4193eca0321bee10a590e7c34c9",
+      "bytes": 96933
+    },
+    {
+      "path": "boundaries/rcc_boundary.prj",
+      "sha256": "8403c41c5fb2c9c1336e8626200a2e9431c714b4b682802205b8fd7d6591aec0",
+      "bytes": 401
+    },
+    {
+      "path": "boundaries/rcc_boundary.shp",
+      "sha256": "79631ef1f0cd91014cabf4635a8002a428d0e097b5be940a022c80545ce1d2d7",
+      "bytes": 40136
+    },
+    {
+      "path": "boundaries/rcc_boundary.shx",
+      "sha256": "f0bd493f8d2ce6c78cd59be9f2448edfea568aa00ea7703d3432fe4628e96baa",
+      "bytes": 108
+    },
+    {
+      "path": "boundaries/rcc_zones.gpkg",
+      "sha256": "052d3e43986ce1e178ed016d97969bde8416f9d0e87be57dca66c362be47fc5c",
+      "bytes": 417792
+    },
+    {
+      "path": "tables/zones.csv",
+      "sha256": "58cbfa7c67313122715dc77600e74273bffa380015392ba2356a9cd2785aa94c",
+      "bytes": 1026
+    }
+  ],
+  "runtime_root": "/home/coder/research-runtime/rajshahi-rice"
+}

@@ -1,0 +1,6 @@
+zone_id,zone_name,zone_type,distance_min_km,distance_max_km,area_km2,boundary_version,boundary_status,source_url
+RCC,City Corporation,core,0.0,0.0,46.2267,2024-10-15,official_operational,https://services.arcgis.com/5T5nSi527N4F7luB/arcgis/rest/services/Rajshahi_Wards_data/FeatureServer/0
+R0_5,Inner peri-urban ring,ring,0.0,5.0,252.2351,2024-10-15,official_operational,https://services.arcgis.com/5T5nSi527N4F7luB/arcgis/rest/services/Rajshahi_Wards_data/FeatureServer/0
+R5_10,Outer peri-urban ring,ring,5.0,10.0,394.2309,2024-10-15,official_operational,https://services.arcgis.com/5T5nSi527N4F7luB/arcgis/rest/services/Rajshahi_Wards_data/FeatureServer/0
+RCC_5,City plus 5 km,cumulative,0.0,5.0,298.4617,2024-10-15,official_operational,https://services.arcgis.com/5T5nSi527N4F7luB/arcgis/rest/services/Rajshahi_Wards_data/FeatureServer/0
+RCC_10,City plus 10 km,cumulative,0.0,10.0,692.6926,2024-10-15,official_operational,https://services.arcgis.com/5T5nSi527N4F7luB/arcgis/rest/services/Rajshahi_Wards_data/FeatureServer/0

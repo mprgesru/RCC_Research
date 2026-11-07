@@ -1,0 +1,41 @@
+# Runtime data root pointer and downloaded payloads
+data/
+*.tif
+*.tiff
+*.vrt
+*.nc
+*.hdf
+*.SAFE/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ipynb_checkpoints/
+
+# SQLite sidecars (the database itself is rebuilt, not committed)
+*.sqlite
+*.sqlite3
+*.db
+*.sqlite-wal
+*.sqlite-shm
+*.gpkg-wal
+*.gpkg-shm
+
+# OS and editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+
+# Logs and temporary output
+*.log
+tmp/
+scratch/
