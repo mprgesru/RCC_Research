@@ -47,11 +47,11 @@ Boundary status values:
 
 ## 3. Seasons
 
-Season windows are **provisional** until confirmed against Bangladesh rice-calendar
-sources and Rajshahi agricultural experts, as the protocol requires. Do not treat
-them as final for production maps.
+Season windows are **confirmed** (project owner, 2026-11-07) and are used for all
+maps. Season codes are frozen; any future change requires a coordinator decision
+and a new dictionary version.
 
-| season | Code | Provisional window | Labelling rule |
+| season | Code | Confirmed window | Labelling rule |
 | --- | --- | --- | --- |
 | Boro | `BORO` | November – April | Labelled by harvest year (cycle crosses calendar years) |
 | Aus | `AUS` | May – August | Calendar year of the growing window |
@@ -285,3 +285,5 @@ checksum. `checksums` records SHA-256 for every committed and runtime artifact.
 | 2026-11-07 | Landsat-only baseline; Sentinel comparison separate | Protocol |
 | 2026-11-07 | Local STAC processing; no Google Earth Engine | Project owner |
 | 2026-11-07 | SQLite + GeoPackage; rasters as COG outside Git | Project owner |
+| 2026-11-07 | Season windows confirmed: Boro Nov–Apr, Aus May–Aug, Aman Jun–Nov | Project owner |
+| 2026-11-07 | Final benchmark set: Zhao 2026 and Singha 2017; GCD-Rice and BBS out of scope | Project owner |

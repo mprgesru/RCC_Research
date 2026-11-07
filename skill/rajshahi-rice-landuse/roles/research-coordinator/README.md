@@ -27,7 +27,7 @@ role does not process data; it prevents drift.
 | Sentinel-1 features | Complete | Nine seasonal SAR products |
 | Random forest | Implemented | Not reportable with pseudo-labels |
 | Validation (Step 6) | Frame complete | 506-point stratified design, labels pending |
-| Benchmark (Step 6) | Ready | Zhao 2026 and Singha 2017; auto-discovery of files |
+| Benchmark (Step 6) | Zhao complete | Zhao 2026 compared; Singha pending in Codespace |
 | Manuscript | Draft | Methods and deviations complete; results pending |
 | Release | Pending | Zenodo DOI and checksums |
 
@@ -44,9 +44,7 @@ role does not process data; it prevents drift.
 
 | Topic | Needed from |
 | --- | --- |
-| Season windows confirmed against BRRI/DAE calendars | Local expert or agricultural source |
-| Ward boundary version for sensitivity analysis | Owner, if historical wards are available |
-| BBS yearbook years and definitions | Owner, manual download |
+| GCD-Rice and BBS | Out of scope: files not retrievable (documented) |
 | Zenodo account and token | Owner, at release |
 
 ## Gate protocol

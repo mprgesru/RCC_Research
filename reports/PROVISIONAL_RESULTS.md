@@ -229,6 +229,32 @@ Sentinel-2 as three panels (true colour, false colour, NDVI), blinded to the map
 class. `tables/interpretation_sheet.csv` lists the three chip paths per point with
 blank label fields.
 
+## Benchmark comparison (Zhao 2026)
+
+Zhao et al. (2026) was downloaded (checksums verified) and compared at 1995, 2005,
+2015 and 2024 (the last against our 2025 map).
+
+| Zhao year | Our rice share | Zhao rice share | Agreement | IoU |
+| --- | --- | --- | --- | --- |
+| 1995 | 4.8% | 19.6% | 0.796 | 0.077 |
+| 2005 | 11.8% | 12.3% | 0.794 | 0.077 |
+| 2015 | 17.0% | 12.7% | 0.791 | 0.151 |
+| 2024→2025 | 7.1% | 10.6% | 0.844 | 0.053 |
+
+IoU is lowest inside RCC (0.02–0.07) and highest in the outer ring (0.08–0.21).
+That is consistent with the study hypothesis that published products diverge most
+in mixed urban–agricultural pixels.
+
+Two cautions. High agreement is dominated by matching non-rice area, so it should
+not be read as good performance. And our map is uncalibrated: in 1995 we detect
+4.8% rice against Zhao's 19.6%, which is at least partly our under-detection from
+2–6 valid observations per pixel. This table measures disagreement between two
+maps; it is not an accuracy assessment of either.
+
+Singha et al. (2019) is pending: the figshare host is behind an AWS WAF challenge
+and cannot be downloaded here. The file is available in the project Codespace, and
+`benchmark_products.py` will add it automatically when run there.
+
 ## What must happen before results are reported
 
 | Step | Dependency |

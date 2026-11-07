@@ -96,6 +96,21 @@ md5sum "South and Southeast Asia Paddy Rice 2015.tif" Boro_BGD_2017_V1.tif
 A truncated file will open with a wrong extent or fail to open. Checksums above
 are authoritative.
 
+## Current run
+
+Zhao et al. (2026) downloaded and verified (MD5 matched). Compared 2026-11-07:
+
+| Zhao year | Our rice share | Zhao rice share | Agreement | IoU |
+| --- | --- | --- | --- | --- |
+| 1995 | 4.8% | 19.6% | 0.796 | 0.077 |
+| 2005 | 11.8% | 12.3% | 0.794 | 0.077 |
+| 2015 | 17.0% | 12.7% | 0.791 | 0.151 |
+| 2024 → 2025 | 7.1% | 10.6% | 0.844 | 0.053 |
+
+Singha et al. (2019) is still to be added. The figshare host returns an AWS WAF
+challenge to automated clients; run the script where the three files are present
+and it will include them automatically.
+
 ## Interpretation
 
 Agreement and IoU measure how closely a published product matches our map. They

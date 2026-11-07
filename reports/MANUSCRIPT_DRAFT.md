@@ -110,8 +110,8 @@ for 1990 rising to about 60 per year from 2015; Sentinel-2 has **no coverage ove
 the AOI in 2015**, and Earth Search lacks Sentinel-2 over Bangladesh before 2017,
 so Planetary Computer is the catalog of record for Sentinel-2.
 
-Season windows are **provisional** pending confirmation with BRRI/DAE: Boro
-November–April (labelled by harvest year), Aus May–August, Aman June–November.
+Season windows are **confirmed** (project owner, 2026-11-07): Boro
+November–April labelled by harvest year, Aus May–August, Aman June–November.
 
 ### 2.3 Benchmark products
 
@@ -337,7 +337,23 @@ sensitivity across flood-fraction cuts is tabulated in
 
 ### 4.3 Product comparison
 
-`[PENDING DOWNLOAD]`
+Zhao et al. (2026) was compared at 1995, 2005, 2015 and 2024 (against our 2025 map):
+
+| Zhao year | Our rice share | Zhao rice share | Agreement | IoU |
+| --- | --- | --- | --- | --- |
+| 1995 | 4.8% | 19.6% | 0.796 | 0.077 |
+| 2005 | 11.8% | 12.3% | 0.794 | 0.077 |
+| 2015 | 17.0% | 12.7% | 0.791 | 0.151 |
+| 2024 → 2025 | 7.1% | 10.6% | 0.844 | 0.053 |
+
+IoU is lowest inside RCC (0.02–0.07) and highest in the outer ring (0.08–0.21),
+consistent with greater divergence in mixed urban–agricultural pixels. Agreement
+is inflated by matching non-rice area and should not be read as accuracy.
+
+`[PENDING SINGHA]` The Singha et al. (2019) comparison (Boro, Aus, Aman 2017
+against 2015 and 2020) is not yet included because the figshare host blocks
+automated download. The script adds it automatically when the three files are
+present.
 
 ### 4.4 Accuracy and area
 
