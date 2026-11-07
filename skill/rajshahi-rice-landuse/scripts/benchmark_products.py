@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
-"""Benchmark our rice maps against Zhao et al. (2026) and Singha et al. (2019).
+"""Benchmark our rice maps against Zhao et al. (2026) and APRA500.
 
-This is the final benchmark set for the study. GCD-Rice and the BBS yearbooks are
-documented as unavailable (see reports/BENCHMARKS.md) and are not required.
+This is the final benchmark set for the study. Singha et al. (2019), GCD-Rice and
+the BBS yearbooks are documented as unavailable (see reports/BENCHMARKS.md) and are
+not required.
 
 The script locates the downloaded GeoTIFFs by file name, so they do not have to
 sit in one exact folder. It searches, in order:
@@ -72,12 +73,6 @@ PRODUCTS = [
      "product_year": 2015, "our_years": (2015,), "season": "ALL_UNION"},
     {"name": "APRA500 2020", "tokens": ("paddyrice", "2020"), "exclude": ("southandsoutheastasia",),
      "product_year": 2020, "our_years": (2020,), "season": "ALL_UNION"},
-    {"name": "Singha 2017 Boro", "tokens": ("boro", "bgd", "2017"), "exclude": (),
-     "product_year": 2017, "our_years": (2015, 2020), "season": "BORO"},
-    {"name": "Singha 2017 Aus", "tokens": ("aus", "bgd", "2017"), "exclude": (),
-     "product_year": 2017, "our_years": (2015, 2020), "season": "AUS"},
-    {"name": "Singha 2017 Aman", "tokens": ("aman", "bgd", "2017"), "exclude": (),
-     "product_year": 2017, "our_years": (2015, 2020), "season": "AMAN"},
 ]
 
 SKIP_DIRS = {".git", "node_modules", ".venv", "venv", "__pycache__", ".cache", "chips"}

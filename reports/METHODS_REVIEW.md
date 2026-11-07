@@ -111,7 +111,7 @@ area table defensible in a paper.
 | 5 Land cover | Annual spectral rules; nine classes; rice from seasonal products | Done, provisional |
 | 3 Reference data | Olofsson stratified design; 27 strata; SE 0.02 → 506 points | Frame built, labels pending |
 | 6 Validation | Olofsson estimators; blocked, independent labels; confusion matrix by season and zone | Estimator built, blocked on labels |
-| 6 Benchmark | Compare against GCD-Rice, Zhao et al., Singha et al. 2017 | Script planned; downloads blocked |
+| 6 Benchmark | Compare against Zhao et al. 2026 and APRA500 | Complete; Singha, GCD-Rice and BBS unavailable |
 | 7 Change | Five-year transition matrices; persistence and intensity transitions | Computed, not interpretable until validated |
 | 8 Reproducibility | Manifests, checksums, pinned thresholds, code revisions | Done |
 
@@ -163,7 +163,7 @@ allow, SE 0.015 (about 900 points) is a better target for a journal submission.
 3. Add Sentinel-1 features and retrain; compare against the rule baseline on
    blocked validation.
 4. Run the Olofsson estimator and report adjusted areas with intervals.
-5. Download and compare GCD-Rice, Zhao et al. and Singha et al. 2017.
+5. Compare against Zhao et al. (2026) and APRA500; document the unavailable products.
 6. Map land cover with the same evidence standard, or state that transition
    attribution is limited to the classes that can be validated.
 

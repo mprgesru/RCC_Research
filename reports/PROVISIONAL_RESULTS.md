@@ -168,13 +168,13 @@ synthetic copy; it will not produce numbers until real labels exist.
 ## Benchmark products
 
 Final benchmark set: Zhao et al. (2026) for 1995, 2005, 2015 and 2024, and
-Singha et al. (2019) for Boro, Aus and Aman in 2017. Singha 2017 is compared with
-both 2015 and 2020.
+APRA500 for 2000, 2005, 2010, 2015 and 2020.
 
 | Product | Access | Status |
 | --- | --- | --- |
-| Zhao et al. 2026 | Zenodo, `10.5281/zenodo.21349862` | Downloaded manually |
-| Singha et al. 2017 | figshare, `10.6084/m9.figshare.7873157` | Downloaded manually |
+| Zhao et al. 2026 | Zenodo, `10.5281/zenodo.21349862` | Used |
+| APRA500 | Zenodo, `10.5281/zenodo.5557022` | Used |
+| Singha et al. 2017 | figshare, `10.6084/m9.figshare.7873157` | Not used — host blocked, no mirror |
 | GCD-Rice | Science Data Bank, `10.57760/sciencedb.21665` | Not used — not retrievable |
 | BBS yearbooks | bbs.gov.bd | Not used — unreachable |
 

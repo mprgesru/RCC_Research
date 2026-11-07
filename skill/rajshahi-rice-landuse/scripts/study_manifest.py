@@ -132,7 +132,7 @@ def main() -> int:
             "Sentinel-2 has no 2015 coverage over the AOI; the 2015 comparison uses Sentinel-1 only.",
             "Rule thresholds are uncalibrated placeholders.",
             "Random forest trained on pseudo-labels is circular and not reportable.",
-            "GCD-Rice, Zhao 2026 and Singha 2017 file hosts returned HTTP 403; manual download required.",
+            "Singha 2019 (figshare WAF), GCD-Rice and BBS were not retrievable; APRA500 substituted as the second benchmark.",
             "The RCC boundary is an operational health-microplanning layer, not a cadastral boundary, and its licence is unstated.",
         ],
     }
