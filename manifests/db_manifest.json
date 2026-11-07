@@ -1,17 +1,17 @@
 {
   "artifact": "study_database",
-  "generated_utc": "2026-11-07T08:01:58+00:00",
+  "generated_utc": "2026-11-07T12:26:33+00:00",
   "engine": "SQLite 3 / GeoPackage",
   "inputs": {
     "ddl": "schema/rajshahi_rice.sql",
-    "ddl_sha256": "60c81340b7926073ed505d427da8fdb4633bd19b3e070e2f6e34cc381b0ed1b3",
+    "ddl_sha256": "f84a0b5f01312905e4b0165f7d3e6133393764cc143edea81a08af68d18a562d",
     "zones_source": "boundaries/rcc_zones.gpkg"
   },
   "outputs": {
     "gpkg": {
       "path": "/home/coder/research-runtime/rajshahi-rice/db/rajshahi_rice.gpkg",
-      "sha256": "2281558fc03adc43edd57cdb76d0821552a132cf39fb996060b92d467a8110a7",
-      "bytes": 339968
+      "sha256": "3cad3761da7f268bca763cf3c6897d80c92f158138e1f53ab4e875ae0e21914f",
+      "bytes": 352256
     },
     "sqlite": {
       "path": "/home/coder/research-runtime/rajshahi-rice/db/rajshahi_rice.sqlite",

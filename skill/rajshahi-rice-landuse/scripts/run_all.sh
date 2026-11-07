@@ -55,7 +55,10 @@ echo "== Step 2 and 8: summaries"
 "$PY" "$SKILL/study_manifest.py"
 
 echo "== Step 6: validation (requires interpreted samples)"
-"$PY" "$SKILL/validate.py" --year 2020 || true
+"$PY" "$SKILL/import_labels.py" --year 2020 || true
+for measure in LULC BORO AUS AMAN; do
+  "$PY" "$SKILL/validate.py" --year 2020 --measure "$measure" || true
+done
 
 echo "== Step 6: benchmark (requires manually downloaded products)"
 "$PY" "$SKILL/benchmark_products.py" || true

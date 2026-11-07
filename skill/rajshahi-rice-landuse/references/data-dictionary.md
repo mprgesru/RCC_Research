@@ -251,6 +251,11 @@ in `schema/`. Field names and types below are authoritative.
 
 ### Supporting tables
 
+`reference_labels` stores interpreted labels, one row per sample and season:
+`LULC` rows carry `reference_class`; `BORO`, `AUS` and `AMAN` rows carry
+`is_rice` 1/0. It is populated by `scripts/import_labels.py` from the
+interpretation sheet.
+
 `data_sources` records each source with URL, version, licence, retrieval date and
 checksum. `checksums` records SHA-256 for every committed and runtime artifact.
 

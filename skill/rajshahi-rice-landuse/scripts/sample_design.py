@@ -239,7 +239,14 @@ def main() -> int:
             str(data_root / "chips" / str(args.year) / label / f"{sid}.png")
             for sid in blinded["sample_id"]
         ]
-    for blank in ("reference_class", "confidence", "interpreter_id", "notes"):
+    for blank in (
+        "reference_class", "reference_source", "reference_date", "confidence",
+        "interpreter_id", "notes",
+        "boro_rice", "boro_confidence",
+        "aus_rice", "aus_confidence",
+        "aman_rice", "aman_confidence",
+        "season_notes",
+    ):
         table[blank] = ""
     table.to_csv(TABLE_DIR / "interpretation_sheet.csv", index=False)
 

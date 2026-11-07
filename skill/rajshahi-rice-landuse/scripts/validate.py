@@ -1,26 +1,28 @@
 #!/usr/bin/env python3
 """Stratified accuracy and area estimation following Olofsson et al. (2014).
 
-Reads interpreted samples from the `reference_samples` layer and reports:
+Supports two measurement modes:
 
-- error matrix expressed as proportions of area
-- overall, user's and producer's accuracy with standard errors
-- class area estimates with 95% confidence intervals
+- `--measure LULC`      validates the nine-class land-cover map
+- `--measure BORO|AUS|AMAN` validates a seasonal rice map (rice / non-rice)
 
-Strata weights are recomputed from the map, not taken from the sample, so the
-estimator stays consistent with the sampling design.
+Labels are read from `tables/interpretation_sheet.csv`; the design key (map class,
+stratum, coordinates) comes from the `reference_samples` layer. The estimator uses
+the design strata weights, so the sample remains a probability sample.
 
-If no interpreted samples exist, the script reports the shortfall and exits
-without producing numbers. It never fabricates labels.
+If no labels are present the script reports the shortfall and exits without
+producing numbers. It never fabricates labels.
 
 Outputs
 -------
-tables/validation_{YEAR}.csv        Metrics and area estimates
-manifests/validation_{YEAR}.json    Design and result record
+tables/validation_{MEASURE}_{YEAR}.csv
+tables/error_matrix_{MEASURE}_{YEAR}.csv
+manifests/validation_{MEASURE}_{YEAR}.json
 
 Usage
 -----
-    python validate.py --year 2020
+    python validate.py --year 2020 --measure LULC
+    python validate.py --year 2020 --measure AMAN
 """
 
 from __future__ import annotations
@@ -42,6 +44,7 @@ from rasterio.features import geometry_mask
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
 BOUNDARY_GPKG = REPO_ROOT / "boundaries" / "rcc_zones.gpkg"
+SHEET = REPO_ROOT / "tables" / "interpretation_sheet.csv"
 TABLE_DIR = REPO_ROOT / "tables"
 CRS = "EPSG:32645"
 CLASS_NAMES = {
@@ -49,26 +52,28 @@ CLASS_NAMES = {
     4: "OTHER_CROPLAND", 5: "ORCHARD", 6: "OTHER_VEG",
     7: "BUILT", 8: "WATER", 9: "BARE",
 }
-ALIASES = {
-    "RICE": "RICE", "NON_RICE": "NON_RICE", "NONRICE": "NON_RICE",
-    "BORO": "BORO", "AUS": "AUS", "AMAN": "AMAN",
-    "OTHER_CROPLAND": "OTHER_CROPLAND", "ORCHARD": "ORCHARD",
-    "OTHER_VEG": "OTHER_VEG", "BUILT": "BUILT", "WATER": "WATER", "BARE": "BARE",
-    "BUILT-UP": "BUILT", "BUILTUP": "BUILT", "OTHER VEGETATION": "OTHER_VEG",
-    "OTHER ANNUAL CROP": "OTHER_CROPLAND", "FALLOW": "OTHER_CROPLAND",
-}
+TRUTHY = {"Y", "YES", "1", "TRUE", "T", "RICE"}
+FALSY = {"N", "NO", "0", "FALSE", "F", "NON_RICE", "NONRICE"}
 
 
 def utc_now() -> str:
     return datetime.now(timezone.utc).replace(microsecond=0).isoformat()
 
 
-def normalise(value: str) -> str:
-    key = str(value).strip().upper().replace(" ", "_")
-    return ALIASES.get(key, key)
+def normalise_class(value: str) -> str:
+    return str(value).strip().upper().replace(" ", "_")
 
 
-def strata_weights(data_root: Path, year: int):
+def parse_rice(value) -> int | None:
+    text = str(value).strip().upper().replace(" ", "_")
+    if text in TRUTHY:
+        return 1
+    if text in FALSY:
+        return 0
+    return None
+
+
+def design_weights(data_root: Path, year: int) -> tuple[dict, int]:
     lulc_path = data_root / "rasters" / "products" / f"lulc_{year}_30m.tif"
     with rasterio.open(lulc_path) as source:
         lulc = source.read(1)
@@ -77,15 +82,15 @@ def strata_weights(data_root: Path, year: int):
 
     zones = gpd.read_file(BOUNDARY_GPKG, layer="zones").to_crs(CRS)
     groups = {"RCC": "RCC", "R0_5": "R0_5", "R5_10": "R5_10"}
-    masks = {}
-    for zone_id, group in groups.items():
-        masks[group] = geometry_mask(
+    masks = {
+        group: geometry_mask(
             [zones[zones["zone_id"] == zone_id].geometry.iloc[0]],
             out_shape=shape, transform=transform, invert=True, all_touched=False,
         )
+        for zone_id, group in groups.items()
+    }
 
-    weights = {}
-    total = 0
+    weights, total = {}, 0
     for code, name in CLASS_NAMES.items():
         for group, mask in masks.items():
             pixels = int(((lulc == code) & mask).sum())
@@ -95,10 +100,29 @@ def strata_weights(data_root: Path, year: int):
     return {key: value / total for key, value in weights.items()}, total
 
 
+def sample_points(data_root: Path, year: int) -> gpd.GeoDataFrame:
+    db_path = data_root / "db" / "rajshahi_rice.gpkg"
+    connection = sqlite3.connect(db_path)
+    try:
+        keys = pd.read_sql_query(
+            "SELECT sample_id, stratum, map_class, zone_id FROM reference_samples "
+            "WHERE reference_year = ?",
+            connection, params=(year,),
+        )
+    finally:
+        connection.close()
+    geometry = gpd.read_file(db_path, layer="reference_samples")
+    geometry = geometry[geometry["reference_year"] == year][["sample_id", "geometry"]].to_crs(CRS)
+    merged = geometry.merge(keys.drop_duplicates("sample_id"), on="sample_id", how="left")
+    return merged
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--year", type=int, default=2020)
-    parser.add_argument("--measure", default="ALL_UNION")
+    parser.add_argument("--measure", default="LULC", choices=("LULC", "BORO", "AUS", "AMAN"))
+    parser.add_argument("--sheet", default=str(SHEET))
+    parser.add_argument("--out-dir", default=str(TABLE_DIR))
     parser.add_argument(
         "--data-root",
         default=os.environ.get(
@@ -108,57 +132,64 @@ def main() -> int:
     args = parser.parse_args()
 
     data_root = Path(args.data_root).expanduser().resolve()
-    db_path = data_root / "db" / "rajshahi_rice.gpkg"
-    if not db_path.exists():
-        print(f"Database not found: {db_path}", file=sys.stderr)
+    sheet = Path(args.sheet)
+    if not sheet.exists():
+        print(f"Interpretation sheet not found: {sheet}", file=sys.stderr)
         return 2
 
-    connection = sqlite3.connect(db_path)
-    try:
-        samples = pd.read_sql_query(
-            "SELECT sample_id, stratum, map_class, reference_class, confidence, split "
-            "FROM reference_samples WHERE reference_year = ?",
-            connection, params=(args.year,),
-        )
-    finally:
-        connection.close()
+    points = sample_points(data_root, args.year)
+    labels = pd.read_csv(sheet, dtype=str).fillna("")
+    labels = labels[labels["reference_year"].astype(str) == str(args.year)]
+    frame = points.merge(labels, on="sample_id", how="left", suffixes=("", "_label"))
+    print(f"samples in design: {len(frame)}")
 
-    labelled = samples[samples["reference_class"].notna() & (samples["reference_class"].astype(str) != "")]
-    print(f"samples in design: {len(samples)}")
-    print(f"interpreted samples: {len(labelled)}")
-    if labelled.empty:
+    if args.measure == "LULC":
+        frame["reference"] = frame["reference_class"].map(normalise_class)
+        frame = frame[frame["reference"].isin(set(CLASS_NAMES.values()))]
+        frame["map_value"] = frame["map_class"].map(normalise_class)
+    else:
+        column = f"{args.measure.lower()}_rice"
+        frame["reference_value"] = frame[column].map(parse_rice)
+        frame = frame[frame["reference_value"].notna()]
+        class_path = data_root / "rasters" / "products" / f"rice_class_{args.measure}_{args.year}_30m.tif"
+        if not class_path.exists():
+            print(f"Missing seasonal class raster: {class_path}", file=sys.stderr)
+            return 3
+        with rasterio.open(class_path) as source:
+            values = np.array(
+                [next(source.sample([(geom.x, geom.y)]))[0] for geom in frame.geometry],
+                dtype=np.int16,
+            )
+        frame["map_value"] = np.where(values == 1, "RICE", "NON_RICE")
+        frame.loc[values == 255, "map_value"] = None
+        frame["reference"] = np.where(frame["reference_value"] == 1, "RICE", "NON_RICE")
+        frame = frame[frame["map_value"].notna()]
+
+    print(f"interpreted samples for {args.measure}: {len(frame)}")
+    if frame.empty:
         print()
-        print("No interpreted samples. Nothing can be estimated.")
-        print("Label reference_class in the reference_samples layer, then rerun.")
+        print("No interpreted samples for this measure. Nothing can be estimated.")
+        print("Fill the sheet and rerun.")
         return 0
+    if len(frame) < len(points):
+        print(f"WARNING: {len(points) - len(frame)} samples unlabelled or not applicable; "
+              "estimates may be biased if missingness is not random.", file=sys.stderr)
 
-    if len(labelled) < len(samples):
-        print(f"WARNING: {len(samples) - len(labelled)} samples are unlabelled; "
-              "estimates will be biased if missingness is not random.", file=sys.stderr)
-
-    labelled = labelled.copy()
-    labelled["map_class"] = labelled["map_class"].map(normalise)
-    labelled["reference_class"] = labelled["reference_class"].map(normalise)
-    labelled["stratum"] = labelled["map_class"] + "|" + labelled["stratum"].str.split("|").str[-1]
-
-    weights, total_pixels = strata_weights(data_root, args.year)
-    missing = sorted(set(labelled["stratum"]) - set(weights))
+    weights, total_pixels = design_weights(data_root, args.year)
+    frame["stratum_key"] = frame["map_class"].map(normalise_class) + "|" + frame["zone_id"]
+    missing = sorted(set(frame["stratum_key"]) - set(weights))
     if missing:
         print(f"ERROR: strata absent from the map: {missing}", file=sys.stderr)
-        return 3
+        return 4
 
-    map_classes = sorted(labelled["map_class"].unique())
-    ref_classes = sorted(labelled["reference_class"].unique())
+    map_classes = sorted(frame["map_value"].dropna().unique())
+    ref_classes = sorted(frame["reference"].dropna().unique())
     p = pd.DataFrame(0.0, index=map_classes, columns=ref_classes)
-
-    for stratum, group in labelled.groupby("stratum"):
+    for stratum, group in frame.groupby("stratum_key"):
         weight = weights[stratum]
-        counts = group.groupby(["map_class", "reference_class"]).size()
         n_h = len(group)
-        for (map_class, ref_class), count in counts.items():
-            p.loc[map_class, ref_class] += weight * count / n_h
-
-    # Normalise in case a stratum's sample does not cover all cells.
+        for (map_value, reference), count in group.groupby(["map_value", "reference"]).size().items():
+            p.loc[map_value, reference] += weight * count / n_h
     p = p / p.to_numpy().sum()
 
     overall = float(np.trace(p.to_numpy()))
@@ -168,45 +199,43 @@ def main() -> int:
     pa = {c: (p.loc[c, c] / ref_totals[c]) if ref_totals[c] else np.nan for c in ref_classes}
     f1 = {
         c: (2 * ua[c] * pa[c] / (ua[c] + pa[c]))
-        if c in ua and c in pa and ua[c] and pa[c] and not math.isnan(ua[c]) and not math.isnan(pa[c])
+        if c in ua and c in pa and ua[c] and pa[c]
         else np.nan
-        for c in p.columns
+        for c in ref_classes
     }
 
-    # Standard error of each reference-class area proportion.
-    se = {}
-    for ref_class in ref_classes:
-        variance = 0.0
-        for stratum, group in labelled.groupby("stratum"):
-            weight = weights[stratum]
-            n_h = len(group)
-            if n_h < 2:
-                continue
-            n_hj = int((group["reference_class"] == ref_class).sum())
-            proportion = n_hj / n_h
-            variance += weight**2 * proportion * (1 - proportion) / (n_h - 1)
-        se[ref_class] = math.sqrt(max(variance, 0.0))
-
-    # Standard error of overall accuracy: treat correctness as a binary
-    # variable within each stratum (Olofsson et al. 2014, Eq. 5).
-    overall_variance = 0.0
-    for stratum, group in labelled.groupby("stratum"):
+    variance_overall = 0.0
+    for stratum, group in frame.groupby("stratum_key"):
         weight = weights[stratum]
         n_h = len(group)
         if n_h < 2:
             continue
-        correct = float((group["map_class"] == group["reference_class"]).mean())
-        overall_variance += weight**2 * correct * (1 - correct) / (n_h - 1)
-    overall_se = math.sqrt(max(overall_variance, 0.0))
+        correct = float((group["map_value"] == group["reference"]).mean())
+        variance_overall += weight**2 * correct * (1 - correct) / (n_h - 1)
+    overall_se = math.sqrt(max(variance_overall, 0.0))
+
+    se = {}
+    for ref_class in ref_classes:
+        variance = 0.0
+        for stratum, group in frame.groupby("stratum_key"):
+            weight = weights[stratum]
+            n_h = len(group)
+            if n_h < 2:
+                continue
+            n_hj = int((group["reference"] == ref_class).sum())
+            proportion = n_hj / n_h
+            variance += weight**2 * proportion * (1 - proportion) / (n_h - 1)
+        se[ref_class] = math.sqrt(max(variance, 0.0))
 
     total_area_ha = total_pixels * 0.09
     rows = []
     for ref_class in ref_classes:
         rows.append(
             {
+                "measure": args.measure,
                 "class": ref_class,
-                "mapped_pixels": int(labelled["map_class"].eq(ref_class).sum()),
-                "sample_n": int(labelled["reference_class"].eq(ref_class).sum()),
+                "sample_n": int((frame["reference"] == ref_class).sum()),
+                "mapped_n": int((frame["map_value"] == ref_class).sum()),
                 "p_area": round(float(ref_totals[ref_class]), 6),
                 "area_ha": round(float(ref_totals[ref_class]) * total_area_ha, 1),
                 "ci95_lower_ha": round(max(float(ref_totals[ref_class]) - 1.96 * se[ref_class], 0) * total_area_ha, 1),
@@ -219,10 +248,11 @@ def main() -> int:
         )
 
     metrics = pd.DataFrame(rows)
-    metrics_path = TABLE_DIR / f"validation_{args.year}.csv"
+    out_dir = Path(args.out_dir)
+    out_dir.mkdir(parents=True, exist_ok=True)
+    metrics_path = out_dir / f"validation_{args.measure}_{args.year}.csv"
     metrics.to_csv(metrics_path, index=False)
-
-    matrix_path = TABLE_DIR / f"error_matrix_{args.year}.csv"
+    matrix_path = out_dir / f"error_matrix_{args.measure}_{args.year}.csv"
     p.round(6).to_csv(matrix_path)
 
     manifest = {
@@ -231,24 +261,25 @@ def main() -> int:
         "measure": args.measure,
         "generated_utc": utc_now(),
         "method": "Olofsson et al. (2014) stratified estimator, area proportions",
-        "design_samples": int(len(samples)),
-        "interpreted_samples": int(len(labelled)),
+        "design_samples": int(len(points)),
+        "interpreted_samples": int(len(frame)),
         "strata": int(len(weights)),
         "total_area_ha": round(total_area_ha, 1),
         "overall_accuracy": round(overall, 4),
         "overall_accuracy_se": round(overall_se, 4),
-        "overall_accuracy_ci95": [round(max(overall - 1.96 * overall_se, 0), 4),
-                                  round(min(overall + 1.96 * overall_se, 1), 4)],
+        "overall_accuracy_ci95": [
+            round(max(overall - 1.96 * overall_se, 0), 4),
+            round(min(overall + 1.96 * overall_se, 1), 4),
+        ],
         "class_metrics": rows,
         "outputs": [str(metrics_path), str(matrix_path)],
         "warning": (
-            None
-            if len(labelled) == len(samples)
-            else f"{len(samples) - len(labelled)} unlabelled samples; estimates may be biased"
+            None if len(frame) == len(points)
+            else f"{len(points) - len(frame)} samples unlabelled or not applicable"
         ),
     }
     (data_root / "manifests").mkdir(parents=True, exist_ok=True)
-    (data_root / "manifests" / f"validation_{args.year}.json").write_text(
+    (data_root / "manifests" / f"validation_{args.measure}_{args.year}.json").write_text(
         json.dumps(manifest, indent=2) + "\n", encoding="utf-8"
     )
 
@@ -256,7 +287,6 @@ def main() -> int:
     print(f"overall accuracy: {overall:.4f} (SE {overall_se:.4f})")
     print(metrics.to_string(index=False))
     print(f"\nmetrics: {metrics_path}")
-    print(f"matrix:  {matrix_path}")
     return 0
 
 

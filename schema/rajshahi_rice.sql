@@ -154,6 +154,31 @@ CREATE TABLE IF NOT EXISTS ward_summary (
 );
 
 -- ---------------------------------------------------------------------------
+-- Reference labels
+-- ---------------------------------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS reference_labels (
+    label_id        INTEGER PRIMARY KEY AUTOINCREMENT,
+    sample_id       TEXT NOT NULL,
+    reference_year  INTEGER NOT NULL CHECK (reference_year IN (1990,1995,2000,2005,2010,2015,2020,2025)),
+    season          TEXT NOT NULL CHECK (season IN ('LULC','BORO','AUS','AMAN')),
+    reference_class TEXT,
+    is_rice         INTEGER CHECK (is_rice IS NULL OR is_rice IN (0,1)),
+    reference_source TEXT,
+    reference_date  TEXT,
+    confidence      TEXT CHECK (confidence IS NULL OR confidence IN ('high','medium','low')),
+    interpreter_id  TEXT,
+    notes           TEXT,
+    UNIQUE (sample_id, season),
+    CHECK (
+        (season = 'LULC' AND reference_class IS NOT NULL AND is_rice IS NULL)
+        OR (season IN ('BORO','AUS','AMAN') AND is_rice IS NOT NULL)
+    )
+);
+
+CREATE INDEX IF NOT EXISTS idx_labels_year_season ON reference_labels (reference_year, season);
+
+-- ---------------------------------------------------------------------------
 -- Indexes
 -- ---------------------------------------------------------------------------
 

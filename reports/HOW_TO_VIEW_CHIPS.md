@@ -93,8 +93,16 @@ These examples are deliberately small enough to commit (under 1 MB total).
 ## Which file to label
 
 Use `tables/interpretation_sheet.csv`. Each row has three chip paths
-(`chip_2020_BORO`, `chip_2020_AMAN`, `chip_2020_AUS`). Fill `reference_class`,
-`confidence`, `interpreter_id` and `notes`.
+(`chip_2020_BORO`, `chip_2020_AMAN`, `chip_2020_AUS`) and fields for one
+land-cover class plus a rice call per season (`boro_rice`, `aus_rice`,
+`aman_rice`, each `Y`/`N`/`NA`).
+
+After filling it:
+
+```bash
+python skill/rajshahi-rice-landuse/scripts/import_labels.py --year 2020
+python skill/rajshahi-rice-landuse/scripts/validate.py --year 2020 --measure AMAN
+```
 
 See [SAMPLE_INTERPRETATION_GUIDE.md](SAMPLE_INTERPRETATION_GUIDE.md) for the
 decision rules.

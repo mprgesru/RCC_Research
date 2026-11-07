@@ -209,7 +209,10 @@ limit spatial autocorrelation.
 At $SE = 0.02$ this yields **n = 506** (527 realised); at 0.015 it yields about
 900. Points are stored in the GeoPackage `reference_samples` layer. Interpretation
 chips are exported from Sentinel-2 as three panels (true colour, false colour,
-NDVI) and are **blinded** to the map class so that labels are independent.
+NDVI) and are **blinded** to the map class so that labels are independent. The
+interpretation sheet records one land-cover class and three seasonal rice calls
+per point (`Y`/`N`/`NA`), each with its own confidence, so a single pass supports
+both land-cover and seasonal validation.
 
 Reference labels are not yet available. Consequently no accuracy figure is
 reported in this draft. The estimator is implemented and was verified on a
@@ -228,7 +231,9 @@ class area $A_j=p_{\cdot j}A_{total}$, and
 $$SE(p_{\cdot j})=\sqrt{\sum_h W_h^2\,\frac{\hat p_{hj}(1-\hat p_{hj})}{n_h-1}}.$$
 
 Intervals are $p \pm 1.96\,SE$. The error matrix is reported in area proportions,
-not raw counts.
+not raw counts. The estimator is implemented separately for the land-cover map
+and for each seasonal rice map (`LULC`, `BORO`, `AUS`, `AMAN`), using the same
+probability sample and design weights.
 
 ### 3.7 Change analysis
 

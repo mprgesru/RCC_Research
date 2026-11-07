@@ -32,7 +32,8 @@ but must not redefine shared definitions.
 | `scripts/classify.py` | Phenology Mapper | Implemented (provisional rule set) |
 | `scripts/classify_lulc.py` | Phenology Mapper | Implemented (provisional land cover) |
 | `scripts/transitions.py` | Accuracy and Change Analyst | Implemented (mapped only) |
-| `scripts/validate.py` | Accuracy and Change Analyst | Implemented (Olofsson estimator) |
+| `scripts/validate.py` | Accuracy and Change Analyst | Implemented (LULC + BORO/AUS/AMAN) |
+| `scripts/import_labels.py` | Accuracy and Change Analyst | Implemented |
 | `scripts/sample_design.py` | Accuracy and Change Analyst | Implemented (stratified design) |
 | `scripts/export_chips.py` | Accuracy and Change Analyst | Implemented (blinded chips) |
 | `scripts/make_chip_viewer.py` | Accuracy and Change Analyst | Implemented (HTML viewer) |

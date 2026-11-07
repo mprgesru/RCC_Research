@@ -42,6 +42,7 @@ writes `manifests/db_manifest.json`.
 | `zones` | Five study zones with geometry | `zone_id` |
 | `map_runs` | One row per produced map | `map_id` |
 | `reference_samples` | Training, calibration and validation samples | `sample_id` |
+| `reference_labels` | Interpreted labels per point and season | `label_id` |
 | `area_estimates` | Area with accuracy adjustment and intervals | `estimate_id` |
 | `transition_estimates` | Five-year class transitions | `transition_id` |
 | `ward_summary` | Ward-level summaries | `summary_id` |
