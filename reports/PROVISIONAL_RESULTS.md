@@ -176,6 +176,53 @@ synthetic copy; it will not produce numbers until real labels exist.
 Only the metadata APIs are reachable. Product comparison is therefore blocked
 until the files are downloaded manually.
 
+## Sentinel-1 feature stack
+
+Nine seasonal SAR products were built (2015, 2020, 2025 × Boro, Aus, Aman) from
+Sentinel-1 RTC gamma0, resampled from 10 m to the 30 m study grid.
+
+| Check | Result |
+| --- | --- |
+| 2020 Aman scenes | 33 of 33 read |
+| Median valid SAR observations | 32 per pixel |
+| VV median | −7.8 dB |
+| VH median | −14.3 dB |
+| VH−VV ratio median | −6.4 dB |
+
+This is the cloud-independent evidence the Landsat series lacks. Aman has 32 SAR
+observations where the optical composite has 5.
+
+## Random forest with pseudo-labels
+
+An RF classifier was implemented over 12 features (6 optical, 6 SAR) with
+spatially blocked cross-validation. It was trained on pseudo-labels derived from
+the rule baseline.
+
+**It is circular and must not be reported as a result.**
+
+| Year | Union rice fraction | Rule union | Blocked CV |
+| --- | --- | --- | --- |
+| 2015 | 54.4% | 21.6% | 1.00 |
+| 2020 | 31.6% | 11.1% | 1.00 |
+| 2025 | 27.9% | 10.1% | 1.00 |
+
+CV accuracy of exactly 1.00 is the tell: the labels are a threshold on the same
+optical features fed to the model, so the model trivially reconstructs them.
+
+One genuine improvement was measured: five-year persistence rose from 31% (rule)
+to 48% (RF) for 2015→2020 and from 38% to 67% for 2020→2025. The RF is temporally
+more consistent, but it inflates rice area to implausible levels. Consistency
+without calibration is not accuracy.
+
+Conclusion: the RF is complete and will accept `--labels reference`. It should
+not be run with pseudo-labels for any reported figure.
+
+## Reference chips
+
+All 527 chips were exported for 2020 Aman (three panels: true colour, false
+colour, NDVI), blinded to the map class, with `tables/interpretation_sheet.csv`
+ready for labelling.
+
 ## What must happen before results are reported
 
 | Step | Dependency |

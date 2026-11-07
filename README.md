@@ -21,6 +21,7 @@ scene cache live outside Git (see [Where the data lives](#where-the-data-lives))
 | Source inventory (STAC, GCD-Rice) | ✅ Committed |
 | Full 1990–2025 processing run | ✅ Provisional products generated |
 | Land cover and transitions | 🚧 Computed but not interpretable — see [provisional results](reports/PROVISIONAL_RESULTS.md) |
+| Sentinel-1 and random forest | 🚧 SAR complete; RF needs reference labels |
 | Validation | 🚧 506-point frame built — labels pending |
 | Benchmark products | ⏳ Manual download required |
 

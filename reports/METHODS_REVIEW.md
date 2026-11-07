@@ -107,7 +107,7 @@ area table defensible in a paper.
 | --- | --- | --- |
 | 2 Inventory | Public STAC metadata; per-scene cloud and date records | Done |
 | 4 Seasonal mapping | Multi-date composites; phenology metrics (NDVI, LSWI, amplitude, flood fraction); rule baseline | Done, provisional |
-| 4 Seasonal mapping (upgrade) | Sentinel-1 VV/VH monthly features for 2015/2020/2025; random forest on SAR + optical features | Planned |
+| 4 Seasonal mapping (upgrade) | Sentinel-1 VV/VH monthly features for 2015/2020/2025; random forest on SAR + optical features | SAR built; RF awaits reference labels |
 | 5 Land cover | Annual spectral rules; nine classes; rice from seasonal products | Done, provisional |
 | 3 Reference data | Olofsson stratified design; 27 strata; SE 0.02 → 506 points | Frame built, labels pending |
 | 6 Validation | Olofsson estimators; blocked, independent labels; confusion matrix by season and zone | Estimator built, blocked on labels |

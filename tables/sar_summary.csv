@@ -1,0 +1,10 @@
+reference_year,season,scenes_used,scenes_failed,obs_median,zero_pixels,sar_path
+2015,AMAN,4,4,4.0,0,/home/coder/research-runtime/rajshahi-rice/rasters/sar/sar_2015_AMAN_30m.tif
+2015,AUS,4,5,4.0,0,/home/coder/research-runtime/rajshahi-rice/rasters/sar/sar_2015_AUS_30m.tif
+2015,BORO,7,0,7.0,0,/home/coder/research-runtime/rajshahi-rice/rasters/sar/sar_2015_BORO_30m.tif
+2020,AMAN,33,0,32.0,0,/home/coder/research-runtime/rajshahi-rice/rasters/sar/sar_2020_AMAN_30m.tif
+2020,AUS,25,0,23.0,0,/home/coder/research-runtime/rajshahi-rice/rasters/sar/sar_2020_AUS_30m.tif
+2020,BORO,40,0,35.0,0,/home/coder/research-runtime/rajshahi-rice/rasters/sar/sar_2020_BORO_30m.tif
+2025,AMAN,30,0,30.0,0,/home/coder/research-runtime/rajshahi-rice/rasters/sar/sar_2025_AMAN_30m.tif
+2025,AUS,18,0,18.0,0,/home/coder/research-runtime/rajshahi-rice/rasters/sar/sar_2025_AUS_30m.tif
+2025,BORO,28,0,28.0,0,/home/coder/research-runtime/rajshahi-rice/rasters/sar/sar_2025_BORO_30m.tif
